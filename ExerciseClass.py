@@ -1,11 +1,15 @@
 class Exercise:
     
-    #Tempo and Variation aren't inherent to the exercise, those should be used only when generating the routine
-    def __init__(self, MaxWeight, Bodyparts, OptimalLoadPercentage, isTechniqueFocused):
+    def __init__(self, Name, MaxWeight, Bodyparts, OptimalLoadPercentage, isTechniqueFocused):
+        self.Name=Name
         self.MaxWeight = MaxWeight
         self.Bodyparts = Bodyparts
         self.OptimalLoadPercentage = OptimalLoadPercentage
         self.isTechniqueFocused = isTechniqueFocused
+    def __str__(self):
+        return "The exercise you selected is: "+self.Name+", with a max weight of: "+self.MaxWeight+" kg"
+    def getName(self):
+        return self.Name
 
     def getisTechniqueFocused(self):
         return self.isTechniqueFocused
