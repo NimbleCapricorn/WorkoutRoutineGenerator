@@ -1,0 +1,15 @@
+snatch;65;legs, back;77;true
+clean &jerk;85;legs, back, triceps, chest;82;true
+clean;90;legs, back;85;true
+jerk;85;tricep, chest;74;true
+push press;65;legs, chest, tricep;80;false
+front squat;100;legs, hamstrings;70;false
+back squat;130;legs;70;false
+clean pull;110;legs, back;90;false
+snatch pull;105;legs, back;90;false
+snatch deadlift;115;legs, back;90;false
+bent over row;90;back;70;false
+hip thrust;100;glutes, hanstrings;70;false
+clean pull to hip;110;glutes, hanstrings, back;70;false
+Jerk behind the head;80;tricep, chest;74;true
+overhead squat;60;legs;70;true
