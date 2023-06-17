@@ -1,16 +1,12 @@
-class Exercise(MaxWeight, isNeurologicallyTaxing, isWholeBody , Bodyparts, OptimalLoadPercentage, isTechniqueFocused, Tempo, Variation):
+class Exercise(MaxWeight, isNeurologicallyTaxing, isWholeBody , Bodyparts, OptimalLoadPercentage, isTechniqueFocused):
     
+    #Tempo and Variation aren't inherent to the exercise, those should be used only when generating the routine
     MaxWeight = MaxWeight
     isNeurologicallyTaxing = isNeurologicallyTaxing
     isWholeBody = isWholeBody
     Bodyparts = Bodyparts
     OptimalLoadPercentage = OptimalLoadPercentage
     isTechniqueFocused = isTechniqueFocused
-    Tempo = Tempo
-    Variation = Variation
-
-    def Tempo(self):
-        return self.Tempo
 
     def isTechniqueFocused(self):
         return self.isTechniqueFocused
@@ -29,9 +25,6 @@ class Exercise(MaxWeight, isNeurologicallyTaxing, isWholeBody , Bodyparts, Optim
 
     def MaxWeight(self):
         return self.MaxWeight
-
-    def Variation(self):
-        return self.Variation
     
     pass
 
