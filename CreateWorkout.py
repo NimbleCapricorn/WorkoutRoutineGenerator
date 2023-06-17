@@ -6,8 +6,8 @@ import ExerciseClass
 ExerciseList = []
 Variations = []
 Tempo = []
-with open("Exercise.csv", "r") as ExercisesFile:
-    reader = csv.reader(ExercisesFile)
+with open("Exercises.csv", "r") as ExercisesFile:
+    reader = csv.reader(ExercisesFile, delimiter=";")
     
     for row in reader:
         ExerciseList.append(row)
