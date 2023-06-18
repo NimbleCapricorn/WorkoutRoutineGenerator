@@ -8,6 +8,19 @@ import ExerciseClass
 ExerciseList = []
 Variations = []
 Tempo = []
+PrilepinRowList = []
+PrilepinTable = []
+Prilepin = ["Reps", "Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
+
+#This way of handling the prilepin chart is very artificial (as in: not intuitive). Maybe there is a better way of doing it, but I don't know how
+with open("PrilepinChart.csv", "r") as PrilepinFile:
+    reader = csv.reader(PrilepinFile, delimiter=";")
+    
+    for row in reader:
+        PrilepinRowList.append(row)
+        print(PrilepinRowList)
+
+
 with open("Exercises.csv", "r") as ExercisesFile:
     reader = csv.reader(ExercisesFile, delimiter=";")
     
