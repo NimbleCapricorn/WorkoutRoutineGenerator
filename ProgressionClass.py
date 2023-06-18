@@ -1,5 +1,5 @@
 class Progression:
-    #MethofOfProgression can be linear, weekly undulating, daily undulating
+    #MethofOfProgression can be linear, weekly undulating, daily undulating, Maxout, RPEBased
     #Contraints can be tonnage, OptimalLoadingPercentage 
     def __init__(self, Name, MethodOfProgression, Constraints):
         self.Name=Name
