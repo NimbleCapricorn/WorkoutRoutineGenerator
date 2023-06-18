@@ -35,7 +35,7 @@ with open("Progressions.csv", "r") as ProgressionsFile:
     reader = csv.reader(ProgressionsFile, delimiter=";")
     
     for row in reader:
-        newProgresssion = ProgressionClass.Progression(row[0], row[1], row[2])
+        newProgression = ProgressionClass.Progression(row[0], row[1], row[2])
         ProgressionList.append(newProgression)
         print(newProgression)
 
