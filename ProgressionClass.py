@@ -1,6 +1,6 @@
 class Progression:
     #MethofOfProgression can be linear, weekly undulating, daily undulating
-    #Contraints can be tonnage, OptimalLoadingPercentage
+    #Contraints can be tonnage, OptimalLoadingPercentage 
     def __init__(self, Name, MethodOfProgression, Constraints):
         self.Name=Name
         self.MethodOfProgression = MethodOfProgression
