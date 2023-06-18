@@ -9,10 +9,11 @@ import ProgressionClass
 #Select Exercises here
 SelectedExercises = ["snatch", "clean", "jerk", "pushPress", "cleanPull", "snatchPull"]
 #Select number of weekly workouts here
-NumberOfWorkouts = 4
+NumberOfWeeklyWorkouts = 4
+#Select number of weeks in the routine here
+NumberOfWeeks = 4
 #Select type of Block here
 ProgressionSystem = "Soviet"
-
 
 ExerciseList = []
 Variations = []
