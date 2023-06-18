@@ -8,6 +8,7 @@ import ExerciseClass
 ExerciseList = []
 Variations = []
 Tempo = []
+Prilepin = ["Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
 with open("Exercises.csv", "r") as ExercisesFile:
     reader = csv.reader(ExercisesFile, delimiter=";")
     
