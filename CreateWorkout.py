@@ -6,6 +6,14 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import ExerciseClass
 import ProgressionClass
 
+#Select Exercises here
+SelectedExercises = ["snatch", "clean", "jerk", "pushPress", "cleanPull", "snatchPull"]
+#Select number of weekly workouts here
+NumberOfWorkouts = 4
+#Select type of Block here
+ProgressionSystem = "Soviet"
+
+
 ExerciseList = []
 Variations = []
 Tempo = []
