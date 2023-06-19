@@ -7,7 +7,10 @@ import ExerciseClass
 import ProgressionClass
 
 #Select Exercises here
-SelectedExercises = ["snatch", "clean", "jerk", "pushPress", "cleanPull", "snatchPull"]
+SelectedMainExercises = ["snatch", "clean", "jerk"]
+SelectedPowerExercises = ["cleanPull", "snatchPull"]
+SelectedStrengthExercises =["FrontSquat", "BackSquat", "MilitaryPress"]
+
 #Select number of weekly workouts here
 NumberOfWeeklyWorkouts = 4
 #Select number of weeks in the routine here
@@ -22,6 +25,7 @@ PrilepinRowList = []
 PrilepinTable = []
 Prilepin = ["Reps", "Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
 ProgressionList = []
+
 
 #This way of handling the prilepin chart is very artificial (as in: not intuitive). Maybe there is a better way of doing it, but I don't know how
 with open("PrilepinChart.csv", "r") as PrilepinFile:
@@ -47,4 +51,14 @@ with open("Progressions.csv", "r") as ProgressionsFile:
         newProgression = ProgressionClass.Progression(row[0], row[1], row[2])
         ProgressionList.append(newProgression)
         print(newProgression)
+
+i=0
+WeeklySplitOfExercises = []
+while i < NumberOfWeeklyWorkouts:
+    if SelectedMainExercises[i]:
+        WeeklySplitOfExercises.append(SelectedMainExercises[i])
+    if SelectedPowerExercises[i]:
+        WeeklySplitOfExercises.append(SelectedPowerExercises[i])
+    if SelectedStrengthExercises[i]:
+        WeeklySplitOfExercises.append(SelectedStrengthExercises[i])
 
