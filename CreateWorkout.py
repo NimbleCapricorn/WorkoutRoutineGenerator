@@ -55,10 +55,16 @@ with open("Progressions.csv", "r") as ProgressionsFile:
 i=0
 WeeklySplitOfExercises = []
 while i < NumberOfWeeklyWorkouts:
-    if SelectedMainExercises[i]:
+    if i <  len(SelectedMainExercises):
         WeeklySplitOfExercises.append(SelectedMainExercises[i])
-    if SelectedPowerExercises[i]:
-        WeeklySplitOfExercises.append(SelectedPowerExercises[i])
-    if SelectedStrengthExercises[i]:
-        WeeklySplitOfExercises.append(SelectedStrengthExercises[i])
 
+    if i < len(SelectedPowerExercises):
+        WeeklySplitOfExercises.append(SelectedPowerExercises[i])
+
+    if i < len(SelectedStrengthExercises):
+        WeeklySplitOfExercises.append(SelectedStrengthExercises[i])
+i=0
+Weeks = []
+while i < NumberOfWeeks:
+    Weeks[i] = WeeklySplitOfExercises
+    print(Weeks[i])
