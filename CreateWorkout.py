@@ -51,7 +51,7 @@ with open("Progressions.csv", "r") as ProgressionsFile:
         newProgression = ProgressionClass.Progression(row[0], row[1], row[2])
         ProgressionList.append(newProgression)
         print(newProgression)
-
+#TODO there needs to be a class that has all the main, power, strength (and whatever else gets added) that are in a daily workout, because this will just be an ordered list
 i=0
 WeeklySplitOfExercises = []
 while i < NumberOfWeeklyWorkouts:
