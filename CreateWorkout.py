@@ -13,11 +13,11 @@ SelectedStrengthExercises =["FrontSquat", "BackSquat", "MilitaryPress"]
 
 #Select number of weekly workouts here
 NumberOfWeeklyWorkouts = 4
-#Select number of weeks in the routine here
-NumberOfWeeks = 4
+
 #Select type of Block here
 ProgressionSystem = "Soviet"
 
+NumberOfWeeks = 12
 ExerciseList = []
 Variations = []
 Tempo = []
