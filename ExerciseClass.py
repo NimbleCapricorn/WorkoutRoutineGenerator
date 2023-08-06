@@ -1,27 +1,17 @@
 class Exercise:
     
-    def __init__(self, Name, MaxWeight, Bodyparts, OptimalLoadPercentage, isTechniqueFocused):
-        self.Name=Name
-        self.MaxWeight = MaxWeight
-        self.Bodyparts = Bodyparts
-        self.OptimalLoadPercentage = OptimalLoadPercentage
-        self.isTechniqueFocused = isTechniqueFocused
+    def __init__(self, name, minRepetitions, maxRepetitions):
+        self.name=name
+        self.minRepetitions=minRepetitions
+        self.maxRepetitions=maxRepetitions
     def __str__(self):
-        return "The exercise you selected is: "+self.Name+", with a max weight of: "+self.MaxWeight+" kg"
+        return f"{1}".format(self.name)
     def getName(self):
-        return self.Name
-
-    def getisTechniqueFocused(self):
-        return self.isTechniqueFocused
-
-    def getOptimalLoadingPercentage(self):
-        return self.OptimalLoadPercentage
-
-    def getBodyparts(self):
-        return self.Bodyparts
-
-    def getMaxWeight(self):
-        return self.MaxWeight
+        return self.name
+    def getminRepetitions(self):
+        return self.minRepetitions
+    def getmaxRepetitions(self):
+        return self.maxRepetitions
     
     pass
 
