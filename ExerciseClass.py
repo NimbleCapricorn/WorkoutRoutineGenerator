@@ -12,6 +12,10 @@ class Exercise:
         return self.minRepetitions
     def getmaxRepetitions(self):
         return self.maxRepetitions
+    def getDailyExercise(self, percentOfOneRepMax, numberOfSets, numberofReps):
+        #TODO kitalálni, hogy ez hogy működjön
+        return
+
     
     pass
 
