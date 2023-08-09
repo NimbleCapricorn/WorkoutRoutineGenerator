@@ -13,6 +13,7 @@ class Progression:
     def getMethodOfProgression(self):
         return self.MethodOfProgression
 
+    #Constrains are not used in this moment in time, but for expanded functionality it will be needed
     def getConstraints(self):
         return self.Contstraints
 
