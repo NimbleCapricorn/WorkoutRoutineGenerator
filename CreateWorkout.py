@@ -17,6 +17,7 @@ Prilepin = ["Reps", "Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
 PrilepinTable = []
 PrilepinRowList = []
 ProgressionList=[]
+ExerciseList=[]
 
 #Select Exercises here
 SelectedMainExercises = ["snatch", "clean", "jerk"]
