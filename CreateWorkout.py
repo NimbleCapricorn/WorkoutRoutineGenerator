@@ -2,9 +2,11 @@ import os.path
 import sys
 import csv
 import datetime
+import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import ExerciseClass
 import ProgressionClass
+import Difficulty
 
 ###########################################
 #Section 1: configurations and data loading
@@ -13,9 +15,8 @@ import ProgressionClass
 #Section 1 subsection A): configurations and definitions
 ##
 ProgressionMethods=["Linear", "DailyUndulating", "WeeklyUndulating"]
-Prilepin = ["Reps", "Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
-PrilepinTable = []
-PrilepinRowList = []
+Prilepin = ["Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
+PrilepinRowList=[]
 ProgressionList=[]
 ExerciseList=[]
 
@@ -43,13 +44,14 @@ with open("PrilepinChart.csv", "r") as PrilepinFile:
     for row in reader:
         PrilepinRowList.append(row)
         print(PrilepinRowList)
+        
 
 
 with open("Exercises.csv", "r") as ExercisesFile:
     reader = csv.reader(ExercisesFile, delimiter=";")
     
     for row in reader:
-        newExercise = ExerciseClass.Exercise(row[0], row[1], row[2], row[3], row[4])
+        newExercise = ExerciseClass.Exercise(row[0], row[1], row[2])
         ExerciseList.append(newExercise)
         print(newExercise)
 
@@ -61,3 +63,4 @@ with open("Progressions.csv", "r") as ProgressionsFile:
         ProgressionList.append(newProgression)
         print(newProgression)
 
+Block=np.array()
