@@ -7,6 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import ExerciseClass
 import ProgressionClass
 import Difficulty
+import WeekClass
 
 ###########################################
 #Section 1: configurations and data loading
@@ -71,4 +72,4 @@ with open("Progressions.csv", "r") as ProgressionsFile:
         ProgressionList.append(newProgression)
         print(newProgression)
 
-Block=np.array()
+
