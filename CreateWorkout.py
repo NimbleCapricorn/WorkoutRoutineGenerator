@@ -15,7 +15,6 @@ import WeekClass
 ##
 #Section 1 subsection A): configurations and definitions
 ##
-ProgressionMethods=["Linear", "DailyUndulating", "WeeklyUndulating"]
 Prilepin = ["Max", "Heavy+", "Heavy", "Mod+", "Mod", "Light+", "Light"]
 PrilepinRowList=[]
 ProgressionList=[]

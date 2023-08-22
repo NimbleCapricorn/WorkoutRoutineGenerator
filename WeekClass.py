@@ -1,12 +1,15 @@
-import ExerciseClass
+from dataclasses import dataclass
+from ExerciseClass import *
+@dataclass
 class WorkoutDay:
-    pass #TODO megcsinálni, hogy a workoutdayben egy darab array van, ami üres elsőre, és dailyExercise-okat tárol, valamint egy add operátor van rajta, ami hozzáad egy daily exercise-
-    #ot az arrayhez
+    Exerciselist:DailyExercise = []
+    def addExercise(self, DailyExercise):
+        self.Exerciselist.append(DailyExercise)
+        
 class Week:
-    days=[]
+    days:WorkoutDay=[]
     def __init__(self, numberOfDays, days):
-        i=0
-        for i in range(numberOfDays):
+        for i in range(0,numberOfDays):
             self.days.append(WorkoutDay())
 
 
