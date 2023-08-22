@@ -1,0 +1,45 @@
+{
+"Prilepin":[
+    {"Difficulty":"Max", "Reps":[   {"RepNumber":1, "MaxIntensity":100.0, "MinIntensity":97.5},
+                                    {"RepNumber":2, "MaxIntensity":95, "MinIntensity":92.8},
+                                    {"RepNumber":3, "MaxIntensity":92.5, "MinIntensity":90.3},
+                                    {"RepNumber":4, "MaxIntensity":90.0, "MinIntensity":87.8},
+                                    {"RepNumber":5, "MaxIntensity":87.5, "MinIntensity":85.5},
+                                    {"RepNumber":6, "MaxIntensity":85.0, "MinIntensity":83.0},
+                                    {"RepNumber":7, "MaxIntensity":82.5, "MinIntensity":80.0},
+                                    {"RepNumber":8, "MaxIntensity":80.0, "MinIntensity":78.0},
+                                    {"RepNumber":9, "MaxIntensity":78.0, "MinIntensity":72.5},
+                                    {"RepNumber":10, "MaxIntensity":72.5, "MinIntensity":70.8}
+                                ]
+    },
+    {"Difficulty":"Heavy+", "Reps": [   {"RepNumber":1, "MaxIntensity":97.5, "MinIntensity":95.0},
+                                        {"RepNumber":2, "MaxIntensity":92.8, "MinIntensity":90.3},
+                                        {"RepNumber":3, "MaxIntensity":90.3, "MinIntensity":88.0},
+                                        {"RepNumber":4, "MaxIntensity":87.8, "MinIntensity":85.5},
+                                        {"RepNumber":5, "MaxIntensity":85.5, "MinIntensity":83.3},
+                                        {"RepNumber":6, "MaxIntensity":83.0, "MinIntensity":80.8},
+                                        {"RepNumber":7, "MaxIntensity":80.8, "MinIntensity":78.0},
+                                        {"RepNumber":8, "MaxIntensity":78.0, "MinIntensity":76.0},
+                                        {"RepNumber":9, "MaxIntensity":76.0, "MinIntensity":70.0},
+                                        {"RepNumber":10, "MaxIntensity":70.0, "MinIntensity":69.0}
+                                ]
+    },
+    {"Difficulty":"Heavy", "Reps": [    {"RepNumber":1, "MaxIntensity":97.5, "MinIntensity":95.0},
+                                        {"RepNumber":2, "MaxIntensity":92.8, "MinIntensity":90.3},
+                                        {"RepNumber":3, "MaxIntensity":90.3, "MinIntensity":88.0},
+                                        {"RepNumber":4, "MaxIntensity":87.8, "MinIntensity":85.5},
+                                        {"RepNumber":5, "MaxIntensity":85.5, "MinIntensity":83.3},
+                                        {"RepNumber":6, "MaxIntensity":83.0, "MinIntensity":80.8},
+                                        {"RepNumber":7, "MaxIntensity":80.8, "MinIntensity":78.0},
+                                        {"RepNumber":8, "MaxIntensity":78.0, "MinIntensity":76.0},
+                                        {"RepNumber":9, "MaxIntensity":76.0, "MinIntensity":70.0},
+                                        {"RepNumber":10, "MaxIntensity":70.0, "MinIntensity":69.0}
+                                    ]
+    },
+    {"Difficulty":"Mod+", "Reps":"Doe"},
+    {"Difficulty":"Mod", "Reps":"Smith"},
+    {"Difficulty":"Light+", "Reps":"Jones"},
+    {"Difficulty":"Light", "Reps":"Jones"}
+]
+}
+

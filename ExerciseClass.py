@@ -1,24 +1,17 @@
+from dataclasses import *
+@dataclass
 class Exercise:
+   name:str
+   minRepetitions:int
+   maxRepetitions:int 
+   def __str__(self):
+       return f"{1}".format(self.name)    
+
+@dataclass
+class DailyExercise(Exercise):
     
-    def __init__(self, name, minRepetitions, maxRepetitions):
-        self.name=name
-        self.minRepetitions=minRepetitions
-        self.maxRepetitions=maxRepetitions
-    def __str__(self):
-        return f"{1}".format(self.name)
-    def getName(self):
-        return self.name
-    def getminRepetitions(self):
-        return self.minRepetitions
-    def getmaxRepetitions(self):
-        return self.maxRepetitions
-    def getDailyExercise(self, percentOfOneRepMax, numberOfSets, numberofReps):
-        #TODO kitalálni, hogy ez hogy működjön
-        return
-
-    
-    pass
-
-
-
-
+    def __init__(self, name, minRepetitions, maxRepetitions, percentageOfOneRepMax, Sets, Reps):
+        Exercise.__init__(name, minRepetitions,maxRepetitions)
+        self.percentageOfOneRepMax=percentageOfOneRepMax
+        self.Sets=Sets
+        self.Reps=Reps
