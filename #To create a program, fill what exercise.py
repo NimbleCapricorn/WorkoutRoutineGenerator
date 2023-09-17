@@ -19,7 +19,8 @@ def divide_chunks(l, n):
     # looping till length l
     for i in range(0, len(l), n): 
         yield l[i:i + n]
-#Create a table with the days and exercises with sliding window
+
+#Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks
 for Day in Days:
     DailyTable = PrettyTable()
     DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax"]
