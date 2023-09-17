@@ -4,8 +4,8 @@ import math
 ExerciseList=["santch", "clean and jerk","clean pull","squat","OHP"]
 Days=["hétfő","kedd", "csütörtök", "péntek"]
 #functions and variables that make the generation easier
-def window(array, k):
-    """give back k size subarrays of array"""
+def sliding_window(array, k):
+    """give back k size subarrays of array using a sliding window"""
     for i in range(len(array)-k+1):
         yield array[i:i+k]
 windowsize = math.ceil(len(ExerciseList)/len(Days))
@@ -13,7 +13,7 @@ windowsize = math.ceil(len(ExerciseList)/len(Days))
 for Day in Days:
     DailyTable = PrettyTable()
     DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax"]
-    for Exercise in tuple(window(ExerciseList, windowsize))[Days.index(Day)]:
+    for Exercise in tuple(sliding_window(ExerciseList, windowsize))[Days.index(Day)]:
         DailyTable.add_row([Exercise, 3, 3, 70])        
     print(DailyTable)       
             
