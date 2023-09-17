@@ -15,4 +15,4 @@ class IntensityFunction:
       self.name=name
       self.IntensityFunction=np.poly(*amplitudes)
    def __str__(self):
-      return f"The selected intensity is {self.name}" 
+      return f"The selected intensity is {self.name}:{self.IntensityFunction}" 
