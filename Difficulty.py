@@ -10,9 +10,9 @@ import numpy as np
 #       self.upperLimit=upperLimit
 class IntensityFunction:
    name=""
-   IntensityFunction=np.poly(0)
-   def __init_(self, name, amplitudes):
+   IntensityFunction=np.poly((0,0,0,0))
+   def __init__(self, name, amplitudes):
       self.name=name
-      self.IntensityFunction=np.poly(*amplitudes)
+      self.IntensityFunction=np.poly(amplitudes)
    def __str__(self):
-      return f"The selected intensity is {self.name}:{self.IntensityFunction}" 
+      return f"The selected intensity is {self.name}" 
