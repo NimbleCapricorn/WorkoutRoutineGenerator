@@ -1,5 +1,5 @@
 import numpy as np
-import WeekClass
+from WeekClass import *
 #the block below was supposed to support difficulties as raw data table.
 # class Difficulty:
 #    name=""
@@ -10,7 +10,7 @@ import WeekClass
 #       self.lowerLimit=lowerLimit
 #       self.upperLimit=upperLimit
 class IntensityFunction:
-   name:WeekClass.Intensity
+   name:Intensity
    IntensityFunction=np.poly((0,0,0,0))
    def __init__(self, name, amplitudes):
       self.name=name
