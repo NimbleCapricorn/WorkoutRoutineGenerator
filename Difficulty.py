@@ -26,3 +26,5 @@ ModPIntensity=IntensityFunction("MODP", [-0.0124, + 0.2095, - 0.2897, 82.753])
 ModIntensity=IntensityFunction("MOD", [-0.0131, 0.2206, -0.1739, 77.707])
 LightPIntensity=IntensityFunction("LIGHTP",[-0.0124, 0.2095, -0.2897, 82.753])
 LightIntensity=IntensityFunction("LIGHT",[-0.0143, 0.2387, -0.0766, 72.67])
+
+IntensityList=[MaxIntensity,HeavyPIntensity,HeavyIntensity,ModPIntensity,ModIntensity,LightPIntensity,LightIntensity]
