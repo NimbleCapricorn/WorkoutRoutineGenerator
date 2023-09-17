@@ -5,7 +5,7 @@ import WeekClass
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP","PushPress","squat"]
 Days=["Monday", "Tuesday", "Wednesday", "Friday"]
-Weeks=[WeekClass.Week("LOW","LIGHT"), WeekClass.Week("MED","LIGHTP")] #Not advised pairings are HIGH volume with MODP and up intensity, LOW volume with MED and down intensity (only for deloads)
+Weeks=[WeekClass.Week(WeekClass.Volume.LOW,"LIGHT"), WeekClass.Week(WeekClass.Volume.MED,"LIGHTP")] #Not advised pairings are HIGH volume with MODP and up intensity, LOW volume with MED and down intensity (only for deloads)
 windowsize = math.ceil(len(ExerciseList)/len(Days)) #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal chunks
 bool_SlidingWindow=False #Set this if you would like to use sliding window instead of only doing each exercise once
 

@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from typing import Literal
-Volume=Literal["LOW","MED","HIGH"]
+from enum import Enum
+class Volume(Enum):
+    LOW=2
+    MED=3
+    HIGH=4
 Intensity=Literal["LIGHT","LIGHTP","MOD","MODP","HEAVY","HEAVYP","MAX"]
 @dataclass       
 class Week:
