@@ -1,10 +1,11 @@
 from prettytable import PrettyTable
 import math
 import Difficulty
+import WeekClass
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are intensity-volume pairs
-ExerciseList=["santch", "clean and jerk","clean pull","squat","OHP"]
-Days=["hétfő","kedd", "csütörtök", "péntek"]
-Weeks=[]
+ExerciseList=["santch", "clean and jerk", "clean pull", "squat", "OHP"]
+Days=["Monday", "Tuesday", "Wednesday", "Friday"]
+Weeks=[WeekClass.Week("LOW","LIGHT"), WeekClass.Week("MED","LIGHTP")]
 windowsize = math.ceil(len(ExerciseList)/len(Days)) #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal chunks
 bool_SlidingWindow=False #Set this if you would like to use sliding window instead of only doing each exercise once
 #functions and variables that make the generation easier
