@@ -3,6 +3,7 @@ import math
 from Difficulty import *
 from WeekClass import *
 from ExerciseListDividerFunctions import *
+from CreateExerciseRow import *
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP","PushPress","squat"]
 Days=["Monday", "Tuesday", "Wednesday", "Friday"]
@@ -11,13 +12,14 @@ windowsize = math.ceil(len(ExerciseList)/len(Days)) #Overwrite this to make othe
 bool_SlidingWindow=False #Set this if you would like to use sliding window instead of only doing each exercise once per mention in the list
 
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks
-for Day in Days:
-    DailyTable = PrettyTable()
-    DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax"]
-    if(bool_SlidingWindow):
-        for Exercise in tuple(sliding_window(ExerciseList, windowsize))[Days.index(Day)]:
-            DailyTable.add_row([Exercise, 3, 3, 70])
-    else:
-        for Exercise in tuple(divide_chunks(ExerciseList, windowsize))[Days.index(Day)]:
-            DailyTable.add_row([Exercise, 3, 3, 70])        
-    print(DailyTable)               
+for week in Weeks:
+    for Day in Days:
+        DailyTable = PrettyTable()
+        DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax"]
+        if(bool_SlidingWindow):
+            for Exercise in tuple(sliding_window(ExerciseList, windowsize))[Days.index(Day)]:
+                DailyTable.add_row(createExerciseRow(Exercise, week.volume, week.intensity))
+        else:
+            for Exercise in tuple(divide_chunks(ExerciseList, windowsize))[Days.index(Day)]:
+                DailyTable.add_row(createExerciseRow(Exercise, week.volume, week.intensity))        
+        print(DailyTable)               
