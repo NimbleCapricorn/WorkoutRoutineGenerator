@@ -14,7 +14,7 @@ class IntensityFunction:
    IntensityFunction=np.poly((0,0,0,0))
    def __init__(self, name, amplitudes):
       self.name=name
-      self.IntensityFunction=np.poly(amplitudes)
+      self.IntensityFunction=np.poly1d(amplitudes)
    def __str__(self):
       return f"The selected intensity is {self.name}" 
    
