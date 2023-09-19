@@ -13,16 +13,6 @@ Weeks=[Week(Volume.LOW,"LIGHT"), Week(Volume.MED,"LIGHTP")] #Not advised pairing
 windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal chunks
 bool_SlidingWindow=False #Set this if you would like to use sliding window instead of only doing each exercise once per mention in the list
 
-#read exercises
-ExerciseList=[]
-with open("Exercises.csv", "r") as ExercisesFile:
-    reader = csv.reader(ExercisesFile, delimiter=";")
-    
-    for row in reader:
-        newExercise = Exercise(row[0], row[1], row[2])
-        ExerciseList.append(newExercise)
-        print(newExercise)
-
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks
 for week in Weeks:
     for Day in Days:
