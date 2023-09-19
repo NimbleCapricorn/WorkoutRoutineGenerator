@@ -1,4 +1,5 @@
 from Difficulty import *
+from ExerciseClass import *
 def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity):
     Name=name
     volume=VolumeSetting.value
