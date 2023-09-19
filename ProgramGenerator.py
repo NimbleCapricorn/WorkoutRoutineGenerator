@@ -7,7 +7,7 @@ from CreateExerciseRow import *
 from ExerciseClass import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
-ProgramExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP","PushPress","squat"]
+ProgramExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP", "push press", "squat"] ####TODO#### this list should be checked: does every name exist?
 Days=["Monday", "Tuesday", "Wednesday", "Friday"]
 Weeks=[Week(Volume.LOW,"LIGHT"), Week(Volume.MED,"LIGHTP")] #Not advised pairings are HIGH volume with MODP and up intensity, LOW volume with MED and down intensity (only for deloads)
 windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal chunks
