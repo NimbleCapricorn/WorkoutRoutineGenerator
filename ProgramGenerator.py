@@ -5,7 +5,7 @@ from WeekClass import *
 from ExerciseListDividerFunctions import *
 from CreateExerciseRow import *
 from ExerciseClass import *
-import csv
+
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ProgramExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP","PushPress","squat"]
 Days=["Monday", "Tuesday", "Wednesday", "Friday"]

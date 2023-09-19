@@ -1,4 +1,6 @@
 from dataclasses import *
+import csv
+
 @dataclass
 class Exercise:
    name:str
