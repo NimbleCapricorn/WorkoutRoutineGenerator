@@ -7,8 +7,8 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity):
     temporaryExercise:Exercise
     IntermittentIntensity:IntensityFunction
 
-    #find which exercise it is 
-    for ExerciseIterator in ExerciseList:
+    #find which exercise it is  ##TODO## what happens if we can't find the exercise?
+    for ExerciseIterator in ExerciseList: 
         if ExerciseIterator.Name == name: 
             temporaryExercise=ExerciseIterator
 

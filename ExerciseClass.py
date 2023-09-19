@@ -15,6 +15,6 @@ with open("Exercises.csv", "r") as ExercisesFile:
     reader = csv.reader(ExercisesFile, delimiter=";")
     
     for row in reader:
-        newExercise = Exercise(row[0], int(row[1]), int(row[2]))
+        newExercise = Exercise(str(row[0]), int(row[1]), int(row[2]))
         ExerciseList.append(newExercise)
         print(newExercise)
