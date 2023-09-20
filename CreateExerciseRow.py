@@ -23,10 +23,21 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity):
     elif temporaryReps > 40 | temporaryReps <= 0:
         print("repcount out of range")
 
+
     #calculate intensity based on determined repcount and given intensity setting
     for IntensityIterator in IntensityList:
         if  IntensityIterator.name == IntensitySetting:
             IntermittentIntensity=IntensityIterator
     Intensity=round(IntermittentIntensity.IntensityFunction(temporaryReps),1)
-    INOL=(setcount*temporaryReps)/(100-Intensity)
+
+    #Depending on the Rep settings, to achieve a good stimulus, set numbers may need to be bumped up or down as well
+    if temporaryReps<=2 or Intensity<=75.0:
+         if VolumeSetting.name == 'LOW':
+            setcount=3
+         elif VolumeSetting.name == 'MED':
+            setcount=4
+         elif VolumeSetting.name == "HIGH":
+            setcount=5
+
+    INOL=(setcount*temporaryReps)/(100-Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
     return name, setcount, temporaryReps, Intensity, INOL
