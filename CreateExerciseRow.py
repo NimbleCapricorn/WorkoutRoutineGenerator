@@ -27,4 +27,4 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity):
         if  IntensityIterator.name == IntensitySetting:
             IntermittentIntensity=IntensityIterator
     Intensity=round(IntermittentIntensity.IntensityFunction(temporaryReps),1) 
-    return name, volume, 3, Intensity
+    return name, volume, temporaryReps, Intensity
