@@ -1,7 +1,8 @@
 from Difficulty import *
 from ExerciseClass import *
 def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity):
-    volume=VolumeSetting.value
+    INOL:float=0.0
+    setcount=VolumeSetting.value
     #temporary values to make calcuations easier
     temporaryReps:int
     temporaryExercise:Exercise
@@ -26,5 +27,6 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity):
     for IntensityIterator in IntensityList:
         if  IntensityIterator.name == IntensitySetting:
             IntermittentIntensity=IntensityIterator
-    Intensity=round(IntermittentIntensity.IntensityFunction(temporaryReps),1) 
-    return name, volume, temporaryReps, Intensity
+    Intensity=round(IntermittentIntensity.IntensityFunction(temporaryReps),1)
+    INOL=(setcount*temporaryReps)/(100-Intensity)
+    return name, setcount, temporaryReps, Intensity, INOL
