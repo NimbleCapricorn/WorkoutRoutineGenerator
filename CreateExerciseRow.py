@@ -57,4 +57,4 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, IN
     Intensity=round(Intensity,1)
     INOL=round((setcount*temporaryReps)/(100-Intensity),1)
     
-    return name, setcount, temporaryReps, Intensity, INOL
+    return (name, setcount, temporaryReps, Intensity, INOL)

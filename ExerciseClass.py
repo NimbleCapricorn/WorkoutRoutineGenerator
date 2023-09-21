@@ -8,6 +8,16 @@ class Exercise:
    maxRepetitions:int 
    def __str__(self):
        return f"{self.Name}"    
+   
+@dataclass
+class DailyExercise:
+    Name:str
+    NumberOfSets:int
+    NumberOfReps:int
+    Intensity:float
+    INOL:float
+    def __str__(self):
+        return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"
 
 #read exercises
 ExerciseList:Exercise=[]
