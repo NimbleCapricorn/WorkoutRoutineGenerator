@@ -54,6 +54,6 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, IN
         elif(abs(INOL-INOL_Target.value)/INOL_Target.value>0.04 and INOL > INOL_Target.value):
             Intensity-=1
         INOL=(setcount*temporaryReps)/(100-Intensity)
-
+    INOL=round(INOL,1)
     
     return name, setcount, temporaryReps, Intensity, INOL

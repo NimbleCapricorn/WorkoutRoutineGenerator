@@ -5,6 +5,7 @@ from WeekClass import *
 from ExerciseListDividerFunctions import *
 from CreateExerciseRow import *
 from ExerciseClass import *
+from prettytable import ORGMODE
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ####TODO#### this list should be checked: does every name exist?
@@ -22,6 +23,9 @@ windowsize = math.ceil(len(ProgramExerciseList)/len(Days))
 bool_SlidingWindow=False 
 
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks
+DailyTableList=[]
+WeeklyTable=PrettyTable()
+WeeklyTable.field_names=Days
 for week in Weeks:
     for Day in Days:
         DailyTable = PrettyTable()
@@ -32,4 +36,8 @@ for week in Weeks:
         else:
             for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
                 DailyTable.add_row(createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target))        
-        print(DailyTable)               
+        DailyTableList.append(DailyTable)
+    WeeklyTable.add_row(DailyTableList)
+    DailyTableList.clear()
+WeeklyTable.set_style(ORGMODE)
+print(WeeklyTable)               
