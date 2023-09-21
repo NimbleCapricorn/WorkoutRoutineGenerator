@@ -7,11 +7,19 @@ from CreateExerciseRow import *
 from ExerciseClass import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
-ProgramExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP", "push press", "squat"] ####TODO#### this list should be checked: does every name exist?
+####TODO#### this list should be checked: does every name exist?
+ProgramExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP", "push press", "squat"]
+
 Days=["Monday", "Tuesday", "Wednesday", "Friday"]
-Weeks=[Week(Volume.LOW, Intensity.LIGHT, INOL_Target.Deload), Week(Volume.MED, Intensity.HEAVYP, INOL_Target.DailyRecoverable)] #Not advised pairings are HIGH volume with MODP and up intensity (except for enhanced athletes), LOW volume with MOD and down intensity (only for deloads)
-windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal parts
-bool_SlidingWindow=False #Set this if you would like to use sliding window instead of only doing each exercise once per mention in the list
+
+#Not advised weekly setting pairings are HIGH volume with MODP and up intensity (except for enhanced athletes), LOW volume with MOD and down intensity (only for deloads)
+Weeks=[Week(Volume.LOW, Intensity.LIGHT, INOL_Target.Deload), Week(Volume.MED, Intensity.HEAVYP, INOL_Target.DailyRecoverable)] 
+
+#Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal parts
+windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) 
+
+#Set this if you would like to use sliding window instead of only doing each exercise once per mention in the list
+bool_SlidingWindow=False 
 
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks
 for week in Weeks:
