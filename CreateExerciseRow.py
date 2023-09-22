@@ -33,7 +33,7 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, IN
     INOL=(setcount*temporaryReps)/(100-Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
 
     #Depending on the INOL target setting, to achieve a good stimulus, set numbers may need to be bumped up or down as well
-    while (abs(INOL-INOL_Target.value)/INOL_Target.value)>0.05:
+    while (abs(INOL-INOL_Target.value)/INOL_Target.value)>0.2:
         if (abs(INOL_Target.value-INOL)/INOL_Target.value>0.3 and INOL < INOL_Target.value):
             if VolumeSetting.name == 'LOW':
                 setcount=3
