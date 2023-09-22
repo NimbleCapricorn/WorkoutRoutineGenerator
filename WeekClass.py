@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from enum import Enum
 from random import *
 class Volume(Enum): ##TODO## Make it configurable, how many sets volume settings mean
-    LOW=2
-    MED=3
-    HIGH=4
+    LOW=3
+    MED=4
+    HIGH=5
 
 class Intensity(Enum):
     LIGHT=0
