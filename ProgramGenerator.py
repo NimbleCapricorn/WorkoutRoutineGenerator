@@ -1,12 +1,12 @@
 from prettytable import PrettyTable
+from prettytable import ORGMODE
+from prettytable.colortable import ColorTable, Themes
 import math
 from Difficulty import *
 from WeekClass import *
 from ExerciseListDividerFunctions import *
 from CreateExerciseRow import *
 from ExerciseClass import *
-from prettytable.colortable import ColorTable, Themes
-from prettytable import ORGMODE
 import copy
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
@@ -23,31 +23,34 @@ windowsize = math.ceil(len(ProgramExerciseList)/len(Days))
 
 
 #Create the program data
-DailyExerciseList:DailyExercise=[]
+TemporaryDailyExerciseList:DailyExercise=[]
 WeeklyCollectionOfDailyExercises=[]
 for week in Weeks:
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
-            DailyExerciseList.append(DailyExercise(*createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target)))        
-    WeeklyCollectionOfDailyExercises.append(copy.deepcopy(DailyExerciseList))
-    DailyExerciseList.clear()
+            TemporaryDailyExerciseList.append(DailyExercise(*createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target)))        
+    WeeklyCollectionOfDailyExercises.append(copy.deepcopy(TemporaryDailyExerciseList))
+    TemporaryDailyExerciseList.clear()
 for DailyExerciseCollection in WeeklyCollectionOfDailyExercises:
-    for DailyExerciseRow in DailyExerciseCollection:
-        print(DailyExerciseRow)
+    for DailyExerciseRows in DailyExerciseCollection:
+        print(DailyExerciseRows) #only here for debugging purposes
 
-#TODO# the table creation below can now use the program data gnerated above instead of regenerating the data again from scratch
+
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks 
 DailyTableList=[]
-WeeklyTable=ColorTable(theme=Themes.OCEAN)
+WeeklyTable=PrettyTable()
 WeeklyTable.field_names=Days
-for week in Weeks:
-    for Day in Days:
-        DailyTable = ColorTable(theme=Themes.OCEAN)
-        DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
-        for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
-            DailyTable.add_row(createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target))        
-        DailyTableList.append(DailyTable)
+for DailyExerciseCollection in WeeklyCollectionOfDailyExercises:
+    DailyTable = PrettyTable()
+    DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
+    for index, DailyExerciseRows in enumerate(DailyExerciseCollection):
+        DailyTable.add_row((DailyExerciseRows.Name, DailyExerciseRows.NumberOfSets, DailyExerciseRows.NumberOfReps, DailyExerciseRows.Intensity, DailyExerciseRows.INOL))
+        if(index % windowsize == windowsize - 1 or index==len(DailyExerciseCollection)-1):
+            #print(DailyTable) only here for debugging purposes               
+            DailyTableList.append(copy.deepcopy(DailyTable))
+            DailyTable.clear_rows()
     WeeklyTable.add_row(DailyTableList)
+    DailyTable.clear()
     DailyTableList.clear()
 print(WeeklyTable) #If ran from the command line, and only needing it for a quick picture, uncomment this line
 
