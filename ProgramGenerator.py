@@ -62,8 +62,6 @@ for week in WeeksOfProgram:
     DailyTableList.clear()
 print(WeeklyTable)
 
-#The output file below is experimental and does not produce an accurate result
-with open('Output.html', 'w') as output_file:
-    output_file.write(WeeklyTable.get_html_string(format=True))              
+#The output file below is experimental and does not produce an accurate result           
 with open('Output.txt', 'w') as outpul_file:
     outpul_file.write(WeeklyTable.get_formatted_string())
