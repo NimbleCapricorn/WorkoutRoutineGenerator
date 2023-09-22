@@ -39,11 +39,11 @@ for week in Weeks:
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks 
 DailyTableList=[]
 WeeklyTable=PrettyTable()
-WeeklyTable.set_style(ORGMODE)
+WeeklyTable.set_style(MARKDOWN)
 WeeklyTable.field_names=Days
 for DailyExerciseCollection in WeeklyCollectionOfDailyExercises:
     DailyTable = PrettyTable()
-    DailyTable.set_style(ORGMODE)
+    DailyTable.set_style(MARKDOWN)
     DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
     for index, DailyExerciseRows in enumerate(DailyExerciseCollection):
         DailyTable.add_row((DailyExerciseRows.Name, DailyExerciseRows.NumberOfSets, DailyExerciseRows.NumberOfReps, DailyExerciseRows.Intensity, DailyExerciseRows.INOL))
