@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from prettytable import ORGMODE
+from prettytable import ORGMODE, MARKDOWN
 from prettytable.colortable import ColorTable, Themes
 import math
 from Difficulty import *
@@ -31,17 +31,19 @@ for week in Weeks:
             TemporaryDailyExerciseList.append(DailyExercise(*createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target)))        
     WeeklyCollectionOfDailyExercises.append(copy.deepcopy(TemporaryDailyExerciseList))
     TemporaryDailyExerciseList.clear()
-for DailyExerciseCollection in WeeklyCollectionOfDailyExercises:
-    for DailyExerciseRows in DailyExerciseCollection:
-        print(DailyExerciseRows) #only here for debugging purposes
+#for DailyExerciseCollection in WeeklyCollectionOfDailyExercises: (only here for debugging purposes)
+#    for DailyExerciseRows in DailyExerciseCollection:
+#        print(DailyExerciseRows) 
 
 
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks 
 DailyTableList=[]
 WeeklyTable=PrettyTable()
+WeeklyTable.set_style(ORGMODE)
 WeeklyTable.field_names=Days
 for DailyExerciseCollection in WeeklyCollectionOfDailyExercises:
     DailyTable = PrettyTable()
+    DailyTable.set_style(ORGMODE)
     DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
     for index, DailyExerciseRows in enumerate(DailyExerciseCollection):
         DailyTable.add_row((DailyExerciseRows.Name, DailyExerciseRows.NumberOfSets, DailyExerciseRows.NumberOfReps, DailyExerciseRows.Intensity, DailyExerciseRows.INOL))
