@@ -65,10 +65,3 @@ print(WeeklyTable)
 #The output file below is experimental and does not produce an accurate result
 with open('Output.html', 'w') as output_file:
     output_file.write(WeeklyTable.get_html_string(format=True))              
-
-
-
-
-
-
-
