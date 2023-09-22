@@ -33,26 +33,26 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, IN
     INOL=(setcount*temporaryReps)/(100-Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
 
     #Depending on the INOL target setting, to achieve a good stimulus, set numbers may need to be bumped up or down as well
-    while (abs(INOL-INOL_Target.value)/INOL_Target.value)>0.2:
-        if (abs(INOL_Target.value-INOL)/INOL_Target.value>0.3 and INOL < INOL_Target.value):
+    while (abs(INOL-INOL_Target.value)/INOL_Target.value) > 0.35 or (abs(INOL_Target.value-INOL)/INOL_Target.value) > 0.35:
+        if ((INOL_Target.value-INOL)/INOL_Target.value>0.25):
             if VolumeSetting.name == 'LOW':
-                setcount=3
-            elif VolumeSetting.name == 'MED':
                 setcount=4
-            elif VolumeSetting.name == "HIGH":
+            elif VolumeSetting.name == 'MED':
                 setcount=5
-        elif(abs(INOL-INOL_Target.value)/INOL_Target.value>0.3 and INOL > INOL_Target.value):
+            elif VolumeSetting.name == "HIGH":
+                setcount=6
+        elif((INOL-INOL_Target.value)/INOL_Target.value>0.25):
             if VolumeSetting.name == 'LOW':
                 setcount=2
             elif VolumeSetting.name == 'MED':
-                setcount=2
-            elif VolumeSetting.name == "HIGH":
                 setcount=3
+            elif VolumeSetting.name == "HIGH":
+                setcount=4
         INOL=(setcount*temporaryReps)/(100-Intensity)
-        if (abs(INOL_Target.value-INOL)/INOL_Target.value>0.04 and INOL < INOL_Target.value ):
-            Intensity+=0.1
-        elif(abs(INOL-INOL_Target.value)/INOL_Target.value>0.04 and INOL > INOL_Target.value):
-            Intensity-=0.1
+        if ((INOL_Target.value-INOL)/INOL_Target.value>0.01 ):
+            Intensity+=0.3
+        elif((INOL-INOL_Target.value)/INOL_Target.value>0.01 ):
+            Intensity-=0.3
         INOL=(setcount*temporaryReps)/(100-Intensity)
     Intensity=round(Intensity,1)
     INOL=round((setcount*temporaryReps)/(100-Intensity),1)

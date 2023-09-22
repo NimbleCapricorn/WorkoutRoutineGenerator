@@ -12,12 +12,12 @@ from ProgramDataStructure import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ####TODO#### this list should be checked: does every name exist?
-ProgramExerciseList=["snatch", "clean and jerk", "clean pull", "squat", "OHP", "push press", "squat"]
+ProgramExerciseList=["snatch", "snatch pull", "snatch balance", "clean", "clean pull", "front squat", "snatch", "snatch pull", "snatch balance", "jerk", "push press", "squat"]
 
 Days=["Monday", "Tuesday", "Wednesday", "Friday"]
 
 #Not advised weekly setting pairings are HIGH volume with MODP and up intensity (except for enhanced athletes), LOW volume with MOD and down intensity (only for deloads)
-Weeks=[Week(Volume.LOW, Intensity.LIGHT, INOL_Target.Deload), Week(Volume.MED, Intensity.HEAVYP, INOL_Target.DailyRecoverable)] 
+Weeks=[Week(Volume.LOW, Intensity.MOD, INOL_Target.Deload), Week(Volume.MED, Intensity.MOD, INOL_Target.DailyRecoverable), Week(Volume.MED, Intensity.MODP, INOL_Target.LoadAccumulating), Week(Volume.MED, Intensity.LIGHT, INOL_Target.Deload)] 
 
 #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal parts
 windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) 
