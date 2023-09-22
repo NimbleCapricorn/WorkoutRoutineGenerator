@@ -1,16 +1,17 @@
 from ExerciseClass import *
+from dataclasses import *
 
+@dataclass
 class ProgramDay:
     Name:str
-    ExerciseList:DailyExercise=[]
-    pass
+    ExerciseList:DailyExercise
 
+@dataclass
 class ProgramWeek:
-    ID=int
-    ProgramDays:ProgramDay=[]
-    pass
+    ID:int
+    ProgramDays:ProgramDay
 
+@dataclass
 class ProgramMonth:
-    ID=int
-    ProgramWeeks:ProgramWeek=[]
-    pass
+    ID:int
+    ProgramWeeks:ProgramWeek

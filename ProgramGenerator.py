@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from prettytable import ORGMODE, MARKDOWN
+from prettytable import ORGMODE, MARKDOWN, DEFAULT
 from prettytable.colortable import ColorTable, Themes
 import math
 from Difficulty import *
@@ -8,6 +8,7 @@ from ExerciseListDividerFunctions import *
 from CreateExerciseRow import *
 from ExerciseClass import *
 import copy
+from ProgramDataStructure import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ####TODO#### this list should be checked: does every name exist?
@@ -23,39 +24,51 @@ windowsize = math.ceil(len(ProgramExerciseList)/len(Days))
 
 
 #Create the program data
-TemporaryDailyExerciseList:DailyExercise=[]
-WeeklyCollectionOfDailyExercises=[]
-for week in Weeks:
+WeeksOfProgram:ProgramWeek=[]
+DaysOfProgram:ProgramDay=[]
+ListOfTheDaysExercises:DailyExercise=[]
+for index, week in enumerate(Weeks):
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
-            TemporaryDailyExerciseList.append(DailyExercise(*createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target)))        
-    WeeklyCollectionOfDailyExercises.append(copy.deepcopy(TemporaryDailyExerciseList))
-    TemporaryDailyExerciseList.clear()
-#for DailyExerciseCollection in WeeklyCollectionOfDailyExercises: (only here for debugging purposes)
-#    for DailyExerciseRows in DailyExerciseCollection:
-#        print(DailyExerciseRows) 
+            ListOfTheDaysExercises.append(DailyExercise(*createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target)))
+        DaysOfProgram.append(ProgramDay(Day, copy.deepcopy(ListOfTheDaysExercises)))
+        ListOfTheDaysExercises.clear()
+    WeeksOfProgram.append(ProgramWeek(index, copy.deepcopy(DaysOfProgram))) 
+    DaysOfProgram.clear()
+
+#for week in WeeksOfProgram: here for debugging purposes, and to show how to iterate through each exercise
+#    for day in week.ProgramDays:
+#        for exercise in day.ExerciseList:
+#            print(exercise)
 
 
 #Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks 
 DailyTableList=[]
 WeeklyTable=PrettyTable()
-WeeklyTable.set_style(MARKDOWN)
+WeeklyTable.set_style(DEFAULT)
 WeeklyTable.field_names=Days
-for DailyExerciseCollection in WeeklyCollectionOfDailyExercises:
-    DailyTable = PrettyTable()
-    DailyTable.set_style(MARKDOWN)
-    DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
-    for index, DailyExerciseRows in enumerate(DailyExerciseCollection):
-        DailyTable.add_row((DailyExerciseRows.Name, DailyExerciseRows.NumberOfSets, DailyExerciseRows.NumberOfReps, DailyExerciseRows.Intensity, DailyExerciseRows.INOL))
-        if(index % windowsize == windowsize - 1 or index==len(DailyExerciseCollection)-1):
-            #print(DailyTable) only here for debugging purposes               
-            DailyTableList.append(copy.deepcopy(DailyTable))
-            DailyTable.clear_rows()
+for week in WeeksOfProgram:
+    for day in week.ProgramDays:
+        DailyTable = PrettyTable()
+        DailyTable.set_style(DEFAULT)
+        DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
+        for index, exercise in enumerate(day.ExerciseList):
+            DailyTable.add_row([exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL])
+            if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):
+                #print(DailyTable)  only here for debugging purposes          
+                DailyTableList.append(copy.deepcopy(DailyTable))
+                DailyTable.clear_rows()
     WeeklyTable.add_row(DailyTableList)
-    DailyTable.clear()
     DailyTableList.clear()
-print(WeeklyTable) #If ran from the command line, and only needing it for a quick picture, uncomment this line
+print(WeeklyTable)
 
 #The output file below is experimental and does not produce an accurate result
 with open('Output.html', 'w') as output_file:
     output_file.write(WeeklyTable.get_html_string(format=True))              
+
+
+
+
+
+
+
