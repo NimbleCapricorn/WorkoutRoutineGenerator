@@ -1,5 +1,6 @@
 from Difficulty import *
 from ExerciseClass import *
+from WeekClass import *
 def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL_Target):
     INOL:float=0.0
     setcount=VolumeSetting.value
@@ -14,11 +15,11 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, IN
             temporaryExercise=ExerciseIterator
 
     #determine best rep number for the volume setting
-    if VolumeSetting.name == 'LOW':
+    if VolumeSetting.name == Volume.LOW.name:
         temporaryReps=temporaryExercise.maxRepetitions
-    elif VolumeSetting.name == 'MED':
+    elif VolumeSetting.name == Volume.MED.name:
         temporaryReps=round((temporaryExercise.maxRepetitions+temporaryExercise.minRepetitions)/2)
-    elif VolumeSetting.name == "HIGH":
+    elif VolumeSetting.name == Volume.HIGH.name:
         temporaryReps=temporaryExercise.minRepetitions
     elif temporaryReps > 40 | temporaryReps <= 0:
         print("repcount out of range")
@@ -35,18 +36,18 @@ def createExerciseRow(name, VolumeSetting:Volume, IntensitySetting:Intensity, IN
     #Depending on the INOL target setting, to achieve a good stimulus, set numbers may need to be bumped up or down as well
     while (abs(INOL-INOL_Target.value)/INOL_Target.value) > 0.35 or (abs(INOL_Target.value-INOL)/INOL_Target.value) > 0.35:
         if ((INOL_Target.value-INOL)/INOL_Target.value>0.25):
-            if VolumeSetting.name == 'LOW':
+            if VolumeSetting.name == Volume.LOW.name:
                 setcount=4
-            elif VolumeSetting.name == 'MED':
+            elif VolumeSetting.name == Volume.MED.name:
                 setcount=5
-            elif VolumeSetting.name == "HIGH":
+            elif VolumeSetting.name == Volume.HIGH.name:
                 setcount=6
         elif((INOL-INOL_Target.value)/INOL_Target.value>0.25):
-            if VolumeSetting.name == 'LOW':
+            if VolumeSetting.name == Volume.LOW.name:
                 setcount=2
-            elif VolumeSetting.name == 'MED':
+            elif VolumeSetting.name == Volume.MED.name:
                 setcount=3
-            elif VolumeSetting.name == "HIGH":
+            elif VolumeSetting.name == Volume.HIGH.name:
                 setcount=4
         INOL=(setcount*temporaryReps)/(100-Intensity)
         if ((INOL_Target.value-INOL)/INOL_Target.value>0.01 ):
