@@ -7,10 +7,11 @@ from Difficulty import *
 from WeekClass import *
 from ExerciseListDividerFunctions import *
 from ExerciseClass import *
-import copy
+from copy import *
 from ProgramDataStructure import *
 from tablib import *
-from pandas import *
+from xlsxwriter import *
+#from pandas import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ####TODO#### this list should be checked: does every name exist?
@@ -33,9 +34,9 @@ for index, week in enumerate(Weeks):
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
             ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target))
-        DaysOfProgram.append(ProgramDay(Day, copy.deepcopy(ListOfTheDaysExercises)))
+        DaysOfProgram.append(ProgramDay(Day, deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
-    WeeksOfProgram.append(ProgramWeek(index, copy.deepcopy(DaysOfProgram))) 
+    WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 
     DaysOfProgram.clear()
 
 #for week in WeeksOfProgram: here for debugging purposes, and to show how to iterate through each exercise
@@ -58,7 +59,7 @@ for week in WeeksOfProgram:
             DailyTable.add_row([exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL])
             if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):
                 #print(DailyTable)  only here for debugging purposes          
-                DailyTableList.append(copy.deepcopy(DailyTable))
+                DailyTableList.append(deepcopy(DailyTable))
                 DailyTable.clear_rows()
     WeeklyTable.add_row(DailyTableList)
     DailyTableList.clear()
@@ -67,3 +68,16 @@ print(WeeklyTable)
 #The output file below is a simple text representation of the generated workout program           
 with open('Output.txt', 'w') as output_file:
     output_file.write(str(WeeklyTable))
+
+WorkBook=Workbook('Output.xlsx')
+for week in WeeksOfProgram:
+    worksheet = WorkBook.add_worksheet(f"Week{week.ID}")
+    for index, day in enumerate(Days):
+        worksheet.merge_range(1, (6*index+1), 1, (6*index+6), Days[index])
+    worksheet.add_table(1,2, (5*len(Days)),(windowsize+3), {'header_row':False})
+    for index, day in enumerate(Days):
+        worksheet.write_row((index*5+1), 3, ["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"])
+    for index, day in enumerate(week.ProgramDays):
+        for exercise in day.ExerciseList:
+            worksheet.write_row((3+index), 1, exercise)
+        

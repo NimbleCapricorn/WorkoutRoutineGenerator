@@ -1,5 +1,6 @@
 from ExerciseClass import *
 from dataclasses import *
+#from numpy import *
 
 @dataclass
 class ProgramDay:
