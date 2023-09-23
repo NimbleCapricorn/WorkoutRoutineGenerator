@@ -41,14 +41,14 @@ class DailyExercise:
                 temporaryExercise=ExerciseIterator
 
         #determine best rep number for the volume setting
-        if VolumeSetting.name == Volume.LOW.name:
-            temporaryReps=temporaryExercise.maxRepetitions
-        elif VolumeSetting.name == Volume.MED.name:
-            temporaryReps=round((temporaryExercise.maxRepetitions+temporaryExercise.minRepetitions)/2)
-        elif VolumeSetting.name == Volume.HIGH.name:
-            temporaryReps=temporaryExercise.minRepetitions
-        elif temporaryReps > 40 | temporaryReps <= 0:
-            print("repcount out of range")
+        match VolumeSetting.name: 
+            case Volume.LOW.name:
+                temporaryReps=temporaryExercise.maxRepetitions
+            case Volume.MED.name:
+                temporaryReps=round((temporaryExercise.maxRepetitions+temporaryExercise.minRepetitions)/2)
+            case Volume.HIGH.name:
+                temporaryReps=temporaryExercise.minRepetitions
+
 
 
         #calculate intensity based on determined repcount and given intensity setting
@@ -62,19 +62,21 @@ class DailyExercise:
         #Depending on the INOL target setting, to achieve a good stimulus, set numbers may need to be bumped up or down as well
         while (abs(INOL-INOL_Target.value)/INOL_Target.value) > 0.35 or (abs(INOL_Target.value-INOL)/INOL_Target.value) > 0.35:
             if ((INOL_Target.value-INOL)/INOL_Target.value>0.25):
-                if VolumeSetting.name == Volume.LOW.name:
-                    setcount=4
-                elif VolumeSetting.name == Volume.MED.name:
-                    setcount=5
-                elif VolumeSetting.name == Volume.HIGH.name:
-                    setcount=6
+                match VolumeSetting.name:
+                    case Volume.LOW.name:
+                        setcount=4
+                    case Volume.MED.name:
+                        setcount=5
+                    case Volume.HIGH.name:
+                        setcount=6
             elif((INOL-INOL_Target.value)/INOL_Target.value>0.25):
-                if VolumeSetting.name == Volume.LOW.name:
-                    setcount=2
-                elif VolumeSetting.name == Volume.MED.name:
-                    setcount=3
-                elif VolumeSetting.name == Volume.HIGH.name:
-                    setcount=4
+                match VolumeSetting.name:
+                    case Volume.LOW.name:
+                        setcount=2
+                    case Volume.MED.name:
+                        setcount=3
+                    case Volume.HIGH.name:
+                        setcount=4
             INOL=(setcount*temporaryReps)/(100-Intensity)
             if ((INOL_Target.value-INOL)/INOL_Target.value>0.01 ):
                 Intensity+=0.3
