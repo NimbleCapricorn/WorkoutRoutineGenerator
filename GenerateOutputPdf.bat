@@ -1,1 +1,0 @@
-python -m pandoc Output.txt -o Output.pdf
