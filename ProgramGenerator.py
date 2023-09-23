@@ -1,3 +1,4 @@
+import os
 from prettytable import PrettyTable
 from prettytable import ORGMODE, MARKDOWN, DEFAULT
 from prettytable.colortable import ColorTable, Themes
@@ -10,6 +11,7 @@ from ExerciseClass import *
 import copy
 from ProgramDataStructure import *
 from tablib import *
+from pandas import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ####TODO#### this list should be checked: does every name exist?
@@ -64,11 +66,5 @@ for week in WeeksOfProgram:
 print(WeeklyTable)
 
 #The output file below is a simple text representation of the generated workout program           
-with open('Output.txt', 'w') as outpul_file:
-    outpul_file.write(str(WeeklyTable))
-
-#tablib output generation
-TablibData=Dataset()
-
-TablibData.headers(Days)
-
+with open('Output.txt', 'w') as output_file:
+    output_file.write(str(WeeklyTable))
