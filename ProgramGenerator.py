@@ -42,15 +42,15 @@ for index, week in enumerate(Weeks):
 #            print(exercise)
 
 
-#Create a table with the days and exercises with the exerciselist subsets using either the sliding window or the chunks 
+#Create a table with the days and exercises with the exerciselist subsets
 DailyTableList=[]
 WeeklyTable=PrettyTable()
-WeeklyTable.set_style(DEFAULT)
+WeeklyTable.set_style(ORGMODE)
 WeeklyTable.field_names=Days
 for week in WeeksOfProgram:
     for day in week.ProgramDays:
         DailyTable = PrettyTable()
-        DailyTable.set_style(DEFAULT)
+        DailyTable.set_style(ORGMODE)
         DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
         for index, exercise in enumerate(day.ExerciseList):
             DailyTable.add_row([exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL])
@@ -62,6 +62,6 @@ for week in WeeksOfProgram:
     DailyTableList.clear()
 print(WeeklyTable)
 
-#The output file below is experimental and does not produce an accurate result           
+#The output file below is a simple text representation of the generated workout program           
 with open('Output.txt', 'w') as outpul_file:
-    outpul_file.write(WeeklyTable.get_formatted_string())
+    outpul_file.write(str(WeeklyTable))
