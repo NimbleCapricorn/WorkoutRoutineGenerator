@@ -6,7 +6,6 @@ import math
 from Difficulty import *
 from WeekClass import *
 from ExerciseListDividerFunctions import *
-from CreateExerciseRow import *
 from ExerciseClass import *
 import copy
 from ProgramDataStructure import *
@@ -33,7 +32,7 @@ ListOfTheDaysExercises:DailyExercise=[]
 for index, week in enumerate(Weeks):
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
-            ListOfTheDaysExercises.append(DailyExercise(*createExerciseRow(exercise, week.volume, week.intensity, week.INOL_Target)))
+            ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target))
         DaysOfProgram.append(ProgramDay(Day, copy.deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
     WeeksOfProgram.append(ProgramWeek(index, copy.deepcopy(DaysOfProgram))) 
