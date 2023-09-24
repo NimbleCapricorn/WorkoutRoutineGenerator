@@ -20,7 +20,8 @@ with open("Exercises.csv", "r") as ExercisesFile:
     for row in reader:
         newExercise = Exercise(str(row[0]), int(row[1]), int(row[2]))
         ExerciseList.append(newExercise)
-   
+
+@dataclass
 class DailyExercise:
     Name:str
     NumberOfSets:int

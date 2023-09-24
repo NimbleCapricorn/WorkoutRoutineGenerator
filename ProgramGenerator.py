@@ -11,7 +11,7 @@ from copy import *
 from ProgramDataStructure import *
 from tablib import *
 from xlsxwriter import *
-#from pandas import *
+from pandas import *
 
 #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
 ####TODO#### this list should be checked: does every name exist?
@@ -65,19 +65,25 @@ for week in WeeksOfProgram:
     DailyTableList.clear()
 print(WeeklyTable)
 
-#The output file below is a simple text representation of the generated workout program           
-with open('Output.txt', 'w') as output_file:
-    output_file.write(str(WeeklyTable))
+#DataFrame implementation        
+path=f"{os.getcwd()}/Output.xlsx"
+DayDictionary={}
+WeekDictionary={}
+for weekindex, week in enumerate(WeeksOfProgram):
+    OneWeek=[]
+    for day in week.ProgramDays:
+        OneDay=DataFrame(data={"Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
+        for index, exercise in enumerate(day.ExerciseList):
+            OneDay.loc[index]=[exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL]
+            if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):
+                if day.Name not in DayDictionary.keys():          
+                    DayDictionary[day.Name]=(deepcopy(OneDay))
+        OneWeek.append(deepcopy(DayDictionary))
+        DayDictionary.clear()
+        WeekDictionary[week.ID]=(deepcopy(OneWeek))
 
-WorkBook=Workbook('Output.xlsx')
-for week in WeeksOfProgram:
-    worksheet = WorkBook.add_worksheet(f"Week{week.ID}")
-    for index, day in enumerate(Days):
-        worksheet.merge_range(1, (6*index+1), 1, (6*index+6), Days[index])
-    worksheet.add_table(1,2, (5*len(Days)),(windowsize+3), {'header_row':False})
-    for index, day in enumerate(Days):
-        worksheet.write_row((index*5+1), 3, ["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"])
-    for index, day in enumerate(week.ProgramDays):
-        for exercise in day.ExerciseList:
-            worksheet.write_row((3+index), 1, exercise)
-        
+
+Writer=ExcelWriter(path, "xlsxwriter")
+for index, week in enumerate(Weeks):
+    for dayindex, day in enumerate(Days):
+            WeekDictionary[index][dayindex][day].to_excel(Writer, sheet_name=f"Week {index}")
