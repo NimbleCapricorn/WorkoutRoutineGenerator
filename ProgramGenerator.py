@@ -68,23 +68,23 @@ print(WeeklyTable)
 #DataFrame implementation        
 path=f"{os.getcwd()}/Output.xlsx"
 DayDictionary={}
-WeekDictionary={}
+WeekList=[]
 for weekindex, week in enumerate(WeeksOfProgram):
-    OneWeek=[]
-    for day in week.ProgramDays:
+    WeekDictionary={}
+    for day in Days:
+        WeekDictionary[day]=[]
+    OneWeek=DataFrame(data=WeekDictionary)
+    for dayindex, day in enumerate(week.ProgramDays):
         OneDay=DataFrame(data={"Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
         for index, exercise in enumerate(day.ExerciseList):
             OneDay.loc[index]=[exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL]
-            if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):
-                if day.Name not in DayDictionary.keys():          
-                    DayDictionary[day.Name]=(deepcopy(OneDay))
-        OneWeek.append(deepcopy(DayDictionary))
-        DayDictionary.clear()
-        WeekDictionary[week.ID]=(deepcopy(OneWeek))
-
+            if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):         
+                DayDictionary[day.Name]=(deepcopy(OneDay))
+    OneWeek.loc[dayindex]=(deepcopy(DayDictionary))
+    DayDictionary.clear()
+    WeekList.append(deepcopy(OneWeek))
 
 Writer=ExcelWriter(path, "xlsxwriter")
-for index, week in enumerate(Weeks):
-    for dayindex, day in enumerate(Days):
-            WeekDictionary[index][dayindex][day].to_excel(Writer, sheet_name=f"Week {index}")
+for index, week in enumerate(WeekList):
+    week.to_excel(Writer, sheet_name=f"Week {index+1}", index=False, header=False) #this only leaves the last day of each week. How to append these together and write to excel as such? 
 Writer.close()
