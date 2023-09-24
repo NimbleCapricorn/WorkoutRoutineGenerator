@@ -85,6 +85,7 @@ for weekindex, week in enumerate(WeeksOfProgram):
     WeekList.append(deepcopy(OneWeek))
 
 Writer=ExcelWriter(path, "xlsxwriter")
-for index, week in enumerate(WeekList):
-    week.to_excel(Writer, sheet_name=f"Week {index+1}", index=False, header=False) #this only leaves the last day of each week. How to append these together and write to excel as such? 
+for weekindex, week in enumerate(WeekList):
+    for day in week:
+        week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=True, header=True, merge_cells=False)
 Writer.close()
