@@ -87,3 +87,4 @@ Writer=ExcelWriter(path, "xlsxwriter")
 for index, week in enumerate(Weeks):
     for dayindex, day in enumerate(Days):
             WeekDictionary[index][dayindex][day].to_excel(Writer, sheet_name=f"Week {index}")
+Writer.close()
