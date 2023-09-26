@@ -67,25 +67,16 @@ print(WeeklyTable)
 
 #DataFrame implementation        
 path=f"{os.getcwd()}/Output.xlsx"
-DayDictionary={}
 WeekList=[]
 for weekindex, week in enumerate(WeeksOfProgram):
-    WeekDictionary={}
-    for day in Days:
-        WeekDictionary[day]=[]
-    OneWeek=DataFrame(data=WeekDictionary)
+    OneWeek=DataFrame(data={"Day":[], "Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
     for dayindex, day in enumerate(week.ProgramDays):
-        OneDay=DataFrame(data={"Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
         for index, exercise in enumerate(day.ExerciseList):
-            OneDay.loc[index]=[exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL]
-            if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):         
-                DayDictionary[day.Name]=(deepcopy(OneDay))
-    OneWeek.loc[dayindex]=(deepcopy(DayDictionary))
-    DayDictionary.clear()
+            OneWeek=concat([OneWeek, DataFrame([[day.Name, exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL ]], columns=OneWeek.columns)], ignore_index=True)
     WeekList.append(deepcopy(OneWeek))
 
 Writer=ExcelWriter(path, "xlsxwriter")
+WorkBook=Writer.bookmerge_format = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'border': 2})
 for weekindex, week in enumerate(WeekList):
-    for day in week:
-        week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=True, header=True, merge_cells=False)
+        week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=False, header=True, merge_cells=True)
 Writer.close()
