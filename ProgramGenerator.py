@@ -75,9 +75,34 @@ for weekindex, week in enumerate(WeeksOfProgram):
             OneWeek=concat([OneWeek, DataFrame([[day.Name, exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL ]], columns=OneWeek.columns)], ignore_index=True)
     WeekList.append(deepcopy(OneWeek))
 
+
 Writer=ExcelWriter(path, "xlsxwriter")
 Book=Writer.book
+#Output of the Program:
 Format=Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 2})
 for weekindex, week in enumerate(WeekList):
-        week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=False, header=True, merge_cells=True)
+    week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=False, header=True, merge_cells=True)
+#Output of Readback Sheet
+Readback=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "Weight":[], "OneRepMax":[], "RPE":[], "INOL":[]})
+#TODO# output the required equation for the datetime and INOL functions
+Readback.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
+for index, worksheet in enumerate(Book.worksheets()):
+    if (index < len(Weeks)):
+        worksheet.add_table(f'A1:F{len(ProgramExerciseList)+1}', {'columns': [{'header': 'Day'},
+                                                                              {'header': 'Exercise'},
+                                                                              {'header': 'Sets'},
+                                                                              {'header': 'Reps'},
+                                                                              {'header': 'PercentageOfOneRepMax'},
+                                                                              {'header': 'INOL'},
+                                                                             ]})
+    else:
+        worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime'},
+                                                  {'header': 'Exercise'},
+                                                  {'header': 'Sets'},
+                                                  {'header': 'Reps'},
+                                                  {'header': 'Weight'},
+                                                  {'header': 'OneRepMax'},
+                                                  {'header': 'RPE'},
+                                                  {'header': 'INOL'},
+                                                 ]})
 Writer.close()
