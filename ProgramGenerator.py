@@ -76,7 +76,8 @@ for weekindex, week in enumerate(WeeksOfProgram):
     WeekList.append(deepcopy(OneWeek))
 
 Writer=ExcelWriter(path, "xlsxwriter")
-WorkBook=Writer.bookmerge_format = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'border': 2})
+Book=Writer.book
+Format=Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 2})
 for weekindex, week in enumerate(WeekList):
         week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=False, header=True, merge_cells=True)
 Writer.close()
