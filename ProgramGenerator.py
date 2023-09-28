@@ -96,6 +96,7 @@ for index, worksheet in enumerate(Book.worksheets()):
                                                                               {'header': 'INOL'},
                                                                              ]})
     else:
+        formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax]))'
         worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime'},
                                                   {'header': 'Exercise'},
                                                   {'header': 'Sets'},
@@ -103,6 +104,7 @@ for index, worksheet in enumerate(Book.worksheets()):
                                                   {'header': 'Weight'},
                                                   {'header': 'OneRepMax'},
                                                   {'header': 'RPE'},
-                                                  {'header': 'INOL'},
+                                                  {'header': 'INOL',
+                                                   'formula':formula},
                                                  ]})
 Writer.close()
