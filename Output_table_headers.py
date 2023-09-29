@@ -16,5 +16,3 @@ WorkoutLogHeader={'columns': [{'header': 'DateTime'},
                             {'header': 'INOL'},
                             ]
 }
-#,'format':datetime_format formatting is right, setting it is not
-#datetime_format=Book.add_format({'num_format':'éééé. h. n\. ó:pp;@'}) datetime formatting is right, setting it is not
