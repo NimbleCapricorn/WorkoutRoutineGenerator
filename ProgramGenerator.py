@@ -95,8 +95,10 @@ for index, worksheet in enumerate(Book.worksheets()):
                                                                               {'header': 'INOL'},
                                                                              ]})
     else:
-        formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax]))'
-        worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime'},
+        INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax]))'
+        Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
+        worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime',
+                                                   'formula':Timestamp_formula},
                                                   {'header': 'Exercise'},
                                                   {'header': 'Sets'},
                                                   {'header': 'Reps'},
@@ -104,6 +106,6 @@ for index, worksheet in enumerate(Book.worksheets()):
                                                   {'header': 'OneRepMax'},
                                                   {'header': 'RPE'},
                                                   {'header': 'INOL',
-                                                   'formula':formula},
+                                                   'formula':INOL_formula},
                                                  ]})
 Writer.close()
