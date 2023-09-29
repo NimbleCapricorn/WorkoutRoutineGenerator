@@ -97,8 +97,10 @@ for index, worksheet in enumerate(Book.worksheets()):
     else:
         INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax]))'
         Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
+        datetime_format=Book.add_format({'num_format':'mmm d yyyy hh:mm AM/PM'})
         worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime',
-                                                   'formula':Timestamp_formula},
+                                                   'formula':Timestamp_formula,
+                                                   'format':datetime_format},
                                                   {'header': 'Exercise'},
                                                   {'header': 'Sets'},
                                                   {'header': 'Reps'},
