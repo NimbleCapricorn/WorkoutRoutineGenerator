@@ -97,8 +97,10 @@ for index, worksheet in enumerate(Book.worksheets()):
     else:
         INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax])*100)'
         Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
+        OneRM_formula = '=IF([RPE]<>"",[Weight]/(1.0278-(0.0278*([Reps]+10-[RPE]))),[Weight]/(1.0278-(0.0278*([Reps]))))'
         datetime_format=Book.add_format({'num_format':'mmm d yyyy hh:mm AM/PM'})
-        worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime',
+
+        worksheet.add_table('A1:I2', {'columns': [{'header': 'DateTime',
                                                    'formula': Timestamp_formula,
                                                    'format': datetime_format},
                                                   {'header': 'Exercise'},
@@ -109,5 +111,7 @@ for index, worksheet in enumerate(Book.worksheets()):
                                                   {'header': 'RPE'},
                                                   {'header': 'INOL',
                                                    'formula':INOL_formula},
+                                                  {'header': 'EstimateOneRM',
+                                                   'formula': OneRM_formula}
                                                  ]})
 Writer.close()
