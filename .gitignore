@@ -3,8 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# output files
-Output.*
+# generated files
+*Output.*
+*readback_analysis.*
 
 # C extensions
 *.so
