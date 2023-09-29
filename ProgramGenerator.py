@@ -99,8 +99,8 @@ for index, worksheet in enumerate(Book.worksheets()):
         Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
         datetime_format=Book.add_format({'num_format':'mmm d yyyy hh:mm AM/PM'})
         worksheet.add_table('A1:H2', {'columns': [{'header': 'DateTime',
-                                                   'formula':Timestamp_formula,
-                                                   'format':datetime_format},
+                                                   'formula': Timestamp_formula,
+                                                   'format': datetime_format},
                                                   {'header': 'Exercise'},
                                                   {'header': 'Sets'},
                                                   {'header': 'Reps'},
