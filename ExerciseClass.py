@@ -61,7 +61,8 @@ class DailyExercise:
         INOL=(setcount*temporaryReps)/(100-Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
 
         #Depending on the INOL target setting, to achieve a good stimulus, set numbers may need to be bumped up or down as well
-        while (abs(INOL-INOL_Target.value)/INOL_Target.value) > 0.35 or (abs(INOL_Target.value-INOL)/INOL_Target.value) > 0.35:
+        while (abs(INOL-INOL_Target.value)/INOL_Target.value) > 0.20 or (abs(INOL_Target.value-INOL)/INOL_Target.value) > 0.35:
+            #Very big error: correct set count
             if ((INOL_Target.value-INOL)/INOL_Target.value>0.25):
                 match VolumeSetting.name:
                     case Volume.LOW.name:
@@ -79,11 +80,23 @@ class DailyExercise:
                     case Volume.HIGH.name:
                         setcount=4
             INOL=(setcount*temporaryReps)/(100-Intensity)
-            if ((INOL_Target.value-INOL)/INOL_Target.value>0.01 ):
+
+            #semi-big error: change rep number
+            if ((INOL_Target.value-INOL)/INOL_Target.value>0.1 ):
+                temporaryReps+=1
+                Intensity=round(IntermittentIntensity.IntensityFunction(temporaryReps),1)
+            elif((INOL-INOL_Target.value)/INOL_Target.value>0.1 ):
+                temporaryReps-=1
+                Intensity=round(IntermittentIntensity.IntensityFunction(temporaryReps),1)
+            INOL=(setcount*temporaryReps)/(100-Intensity)
+
+            #small error:change intensity
+            if ((INOL_Target.value-INOL)/INOL_Target.value>0.05 ):
                 Intensity+=0.3
-            elif((INOL-INOL_Target.value)/INOL_Target.value>0.01 ):
+            elif((INOL-INOL_Target.value)/INOL_Target.value>0.05 ):
                 Intensity-=0.3
             INOL=(setcount*temporaryReps)/(100-Intensity)
+        
         Intensity=round(Intensity,1)
         INOL=round((setcount*temporaryReps)/(100-Intensity),1)
         
