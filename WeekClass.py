@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from random import *
-class Volume(Enum): ##TODO## Make it configurable, how many sets volume settings mean
+class Volume(Enum):
     LOW=3
     MED=4
     HIGH=5
@@ -15,7 +15,7 @@ class Intensity(Enum):
     HEAVYP=5
     MAX=6
 
-class INOL_Target(Enum): #TODO# this should be configurable as well [but these are scientific limits, so they should not be too far off for anyone]
+class INOL_Target(Enum): 
     Deload=0.4              #under 0.4 is too little for stimulating growth, but is perfect for deloading while still practicing skills
     DailyRecoverable=0.8    #between 0.4 and 1.0 is recoverable stimulus (next day you can repeat the same workout basically)
     LoadAccumulating=1.6    #1.0 to 2.0 is accumulating fatigue, with bigger strength gains (only once you fully recover, though)
