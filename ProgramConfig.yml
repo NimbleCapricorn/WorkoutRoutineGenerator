@@ -1,7 +1,35 @@
+#class Volume(Enum):
+#    LOW=3
+#   MED=4
+#  HIGH=5
+
+#class Intensity(Enum):
+#    LIGHT=0
+#    LIGHTP=1
+#    MOD=2
+#    MODP=3
+#    HEAVY=4
+#    HEAVYP=5
+#    MAX=6
+
+#class INOL_Target(Enum): 
+#    Deload=0.4              #under 0.4 is too little for stimulating growth, but is perfect for deloading while still practicing skills
+#    DailyRecoverable=0.8    #between 0.4 and 1.0 is recoverable stimulus (next day you can repeat the same workout basically)
+#    LoadAccumulating=1.6    #1.0 to 2.0 is accumulating fatigue, with bigger strength gains (only once you fully recover, though)
+                            #above 2.0 lies madness
+
 ProgramExerciseList: ['snatch', 'snatch pull', 'snatch balance', 'clean', 'clean pull', 'front squat', 'snatch', 'snatch pull', 'snatch balance', 'jerk', 'push press', 'squat']
 Days: ['Monday', 'Tuesday', 'Wednesday', 'Friday']
-Weeks: [
-  Week(Volume.LOW, Intensity.MOD, INOL_Target.Deload),
-  Week(Volume.MED, Intensity.MOD, INOL_Target.DailyRecoverable),
-  Week(Volume.MED, Intensity.MODP, INOL_Target.LoadAccumulating),
-  Week(Volume.MED, Intensity.LIGHT, INOL_Target.Deload)] 
+Weeks:
+  - Volume: 3
+    Intensity: 2
+    INOL_Target: 0.4
+  - Volume: 4
+    Intenstiy: 2
+    Inol_Target: 0.8
+  - Volume: 4
+    Intensity: 3
+    INOL_Target: 1.6
+  - Volume: 4
+    Intensity: 1
+    INOL_Target: 0.4
