@@ -1,0 +1,7 @@
+ProgramExerciseList:["snatch", "snatch pull", "snatch balance", "clean", "clean pull", "front squat", "snatch", "snatch pull", "snatch balance", "jerk", "push press", "squat"]
+Days:["Monday", "Tuesday", "Wednesday", "Friday"]
+Weeks:[
+  Week(Volume.LOW, Intensity.MOD, INOL_Target.Deload),
+  Week(Volume.MED, Intensity.MOD, INOL_Target.DailyRecoverable),
+  Week(Volume.MED, Intensity.MODP, INOL_Target.LoadAccumulating),
+  Week(Volume.MED, Intensity.LIGHT, INOL_Target.Deload)] 
