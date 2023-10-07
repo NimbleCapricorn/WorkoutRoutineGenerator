@@ -132,7 +132,6 @@ class DailyExercise:
         self.INOL=round(self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity),1)
         
         self.Name=name
-        self.NumberOfSets=self.NumberOfSets
 
     def __str__(self):
         return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"
