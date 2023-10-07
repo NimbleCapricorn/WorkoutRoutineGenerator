@@ -105,8 +105,8 @@ class DailyExercise:
 
             #semi-big error: change rep number
             FurtherChangesPossible:bool=True
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.12/iterator) ):
-                if (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.18/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.07/iterator) ):
+                if (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.14/iterator) ):
                     FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps+2)
                 else:
                     FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps+1)
@@ -121,10 +121,10 @@ class DailyExercise:
             self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
 
             #small error:change intensity
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.2/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.25/iterator) ):
                 self.Intensity+=0.3
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.2/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.25/iterator) ):
                 self.Intensity-=0.3
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
         
