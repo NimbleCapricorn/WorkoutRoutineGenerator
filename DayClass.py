@@ -4,7 +4,7 @@ import csv
 @dataclass
 class DayClass:
     name:str
-    priority:float
+    DayINOLPriority:float
 
 #Reading the users settings
 DaySettingList:DayClass=[]

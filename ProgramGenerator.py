@@ -5,6 +5,7 @@ from prettytable.colortable import ColorTable, Themes
 import math
 from Difficulty import *
 from WeekClass import *
+from DayClass import *
 from ExerciseListDividerFunctions import *
 from ExerciseClass import *
 from copy import *
@@ -41,10 +42,14 @@ windowsize = math.ceil(len(ProgramExerciseList)/len(Days))
 WeeksOfProgram:ProgramWeek=[]
 DaysOfProgram:ProgramDay=[]
 ListOfTheDaysExercises:DailyExercise=[]
+DayINOLSetting:float
 for index, week in enumerate(Weeks):
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
-            ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target))
+            for DayIterator in DaySettingList: 
+                if DayIterator.name == Day: 
+                    DayINOLSetting=DayIterator.DayINOLPriority
+            ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target, DayINOLSetting))
         DaysOfProgram.append(ProgramDay(Day, deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
     WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 
