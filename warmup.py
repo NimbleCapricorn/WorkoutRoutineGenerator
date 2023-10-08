@@ -2,12 +2,12 @@ from ExerciseClass import *
 from Difficulty import *
 #warmup generation
 class Warmup(DailyExercise):
-    limitIntensity:float
     Name:str=[]
     NumberOfSets:int=[]
     NumberOfReps:int=[]
     Intensity:float=[]
     INOL:float=[]
+
     def __init__(self, ParentExercise:DailyExercise):
         self.Name.clear()
         self.NumberOfSets.clear()
@@ -15,7 +15,6 @@ class Warmup(DailyExercise):
         self.Intensity.clear()
         self.INOL.clear()
         NumberOfWarmupSets:int=4
-        self.limitIntensity=ParentExercise.Intensity
         WarmupIntensity=IntensityList[5] #LightPIntensity
         for iterator in range(0, NumberOfWarmupSets-1, 1):
             self.Name.append(ParentExercise.Name)
