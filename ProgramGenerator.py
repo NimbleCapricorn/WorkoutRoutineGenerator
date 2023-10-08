@@ -15,6 +15,7 @@ from xlsxwriter import *
 from pandas import *
 from subprocess import *
 from yaml import *
+from warmup import *
 
 #Output setup: do you need a simple txt output?
 txt_output=False
@@ -47,10 +48,13 @@ DayINOLSetting:float
 for index, week in enumerate(Weeks):
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
+            #generate the working sets:
             for DayIterator in DaySettingList: 
                 if DayIterator.name == Day: 
                     DayINOLSetting=DayIterator.DayINOLPriority
             ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target, DayINOLSetting))
+            #warmup generation, depending on the 
+            ListOfTheDaysExercises.extend(GenerateWarmup(ListOfTheDaysExercises[-1]))
         DaysOfProgram.append(ProgramDay(Day, deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
     WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 
@@ -101,7 +105,7 @@ WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "
 WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
 for index, worksheet in enumerate(Book.worksheets()):
     if (index < len(Weeks)):
-        worksheet.add_table(f'A1:F{len(ProgramExerciseList)+1}', {'columns': [{'header': 'Day'},
+        worksheet.add_table(f'A1:F100', {'columns': [{'header': 'Day'},
                                                                               {'header': 'Exercise'},
                                                                               {'header': 'Sets'},
                                                                               {'header': 'Reps'},
