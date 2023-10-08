@@ -134,12 +134,14 @@ class DailyExercise:
         
         self.Name=name
 
-    def __init__(self, name:str, NumberOfSets:int, NumberOfReps:int, Intensity:float, INOL:float):
-        self.Name=name
-        self.NumberOfSets=NumberOfSets
-        self.NumberOfReps=NumberOfReps
-        self.Intensity=Intensity
-        self.INOL=INOL
+    @classmethod
+    def from_args(cls, name:str, NumberOfSets:int, NumberOfReps:int, Intensity:float, INOL:float):
+        cls.Name=name
+        cls.NumberOfSets=NumberOfSets
+        cls.NumberOfReps=NumberOfReps
+        cls.Intensity=Intensity
+        cls.INOL=INOL
+        return cls
 
     def __str__(self):
         return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"

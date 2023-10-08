@@ -48,20 +48,11 @@ DayINOLSetting:float
 for index, week in enumerate(Weeks):
     for Day in Days:
         for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
-            temporaryExercise:Exercise  #for warmup generation
-            #check which exercise it is, so you can figure our whether you need to generate warmup
-            for ExerciseIterator in ExerciseList: 
-                if ExerciseIterator.Name == exercise: 
-                    temporaryExercise=ExerciseIterator
             #generate the working sets:
             for DayIterator in DaySettingList: 
                 if DayIterator.name == Day: 
                     DayINOLSetting=DayIterator.DayINOLPriority
             ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target, DayINOLSetting))
-            #if you need warmup generation, generate it:
-            if temporaryExercise.generateWarmup:
-                WarmupSetList=Warmup(ListOfTheDaysExercises[-1])
-                ListOfTheDaysExercises.extend(WarmupSetList.getWarmupExercises())            
         DaysOfProgram.append(ProgramDay(Day, deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
     WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 

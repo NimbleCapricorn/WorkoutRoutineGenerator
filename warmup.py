@@ -21,8 +21,19 @@ class Warmup(DailyExercise):
 
     def getWarmupExercises(self):
         WarmupExerciseList:DailyExercise=[]
+        NotUsedLastParameter:str=[]
         for iterator in range(len(self.Name)):
-            WarmupExerciseList.append(DailyExercise(self.Name[iterator], self.NumberOfSets[iterator], self.NumberOfReps[iterator], self.Intensity[iterator], self.INOL[iterator]))
+            WarmupExerciseList.append(DailyExercise.from_args(self.Name[iterator], self.NumberOfSets[iterator], self.NumberOfReps[iterator], self.Intensity[iterator], self.INOL[iterator]))
         return WarmupExerciseList
         
-
+def GererateWarmup(DailyExercise:DailyExercise):
+    temporaryExercise:Exercise  #for warmup generation
+    #check which exercise it is, so you can figure our whether you need to generate warmup
+    for ExerciseIterator in ExerciseList: 
+        if ExerciseIterator.Name == exercise: 
+             temporaryExercise=ExerciseIterator
+                #if you need warmup generation, generate it:
+    if temporaryExercise.generateWarmup:
+        WarmupSets=Warmup(ListOfTheDaysExercises[-1])
+        ListOfTheDaysExercises.extend(deepcopy(WarmupSets.getWarmupExercises()))
+        WarmupSets=None
