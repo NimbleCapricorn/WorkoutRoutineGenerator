@@ -3,6 +3,7 @@ import csv
 from Difficulty import *
 from ExerciseClass import *
 from WeekClass import *
+from copy import deepcopy
 
 @dataclass
 class Exercise:
@@ -122,10 +123,10 @@ class DailyExercise:
             self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
 
             #small error:change intensity
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.25/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.01/iterator) ):
                 self.Intensity+=0.3
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.25/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.01/iterator) ):
                 self.Intensity-=0.3
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
         
@@ -135,13 +136,14 @@ class DailyExercise:
         self.Name=name
 
     @classmethod
-    def from_args(cls, name:str, NumberOfSets:int, NumberOfReps:int, Intensity:float, INOL:float):
-        cls.Name=name
-        cls.NumberOfSets=NumberOfSets
-        cls.NumberOfReps=NumberOfReps
-        cls.Intensity=Intensity
-        cls.INOL=INOL
-        return cls
+    def from_args(cls, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOL:float): 
+        instance=cls("snatch", Volume.LOW, Intensity.MOD, INOL_Target.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+        instance.Name=name
+        instance.NumberOfSets=NumberOfSets
+        instance.NumberOfReps=NumberOfReps
+        instance.Intensity=intensity
+        instance.INOL=INOL
+        return instance
 
     def __str__(self):
         return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"

@@ -105,7 +105,7 @@ WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "
 WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
 for index, worksheet in enumerate(Book.worksheets()):
     if (index < len(Weeks)):
-        worksheet.add_table(f'A1:F{len(ProgramExerciseList)+1}', {'columns': [{'header': 'Day'},
+        worksheet.add_table(f'A1:F100', {'columns': [{'header': 'Day'},
                                                                               {'header': 'Exercise'},
                                                                               {'header': 'Sets'},
                                                                               {'header': 'Reps'},
