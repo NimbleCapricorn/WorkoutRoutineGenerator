@@ -22,7 +22,7 @@ class Warmup(DailyExercise):
             self.Name.append(ParentExercise.Name)
             self.NumberOfSets.append(1)
             self.NumberOfReps.append((self.NumberOfWarmupSets-iterator))
-            self.Intensity.append(round(WarmupIntensity.IntensityFunction(self.NumberOfReps[-1]), 1)) #intensity generation is not correct. Is the function correct?
+            self.Intensity.append(round(WarmupIntensity.IntensityFunction(self.NumberOfReps[-1]), 1))
             self.INOL.append(round(self.calculateINOL(self.NumberOfSets[-1], self.NumberOfReps[-1], self.Intensity[-1]), 1))
 
     def getWarmupExercises(self):
@@ -39,7 +39,7 @@ def GenerateWarmup(CallingExercise:DailyExercise):
         if ExerciseIterator.Name == CallingExercise.Name: 
              temporaryExercise=ExerciseIterator
     if temporaryExercise.generateWarmup:
-        WarmupExercises=Warmup(CallingExercise) #this is correct
+        WarmupExercises=Warmup(CallingExercise)
         WarmupSets.extend(WarmupExercises.getWarmupExercises())
         
     return WarmupSets
