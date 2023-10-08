@@ -1,18 +1,18 @@
-snatch;1;3;1
-clean and jerk;1;3;1
-clean;2;4;1
-jerk;2;4;1
-push press;2;4;1
-front squat;3;8;1
-back squat;3;8;1
-squat;3;8;1
-clean pull;2;4;1
-snatch pull;2;4;1
-snatch deadlift;3;8;1
-bent over row;8;12;1
-hip thrust;3;8;1
-OHP;3;8;1
-clean pull to hip;3;8;1
-Jerk behind the head;3;8;1
-overhead squat;2;4;1
-snatch balance;3;4;1
+snatch;1;3;1;True
+clean and jerk;1;3;1;False
+clean;2;4;1;False
+jerk;2;4;1;False
+push press;2;4;1;False
+front squat;3;8;1;False
+back squat;3;8;1;False
+squat;3;8;1;False
+clean pull;2;4;1;False
+snatch pull;2;4;1;False
+snatch deadlift;3;8;1;False
+bent over row;8;12;1;False
+hip thrust;3;8;1;False
+OHP;3;8;1;False
+clean pull to hip;3;8;1;False
+Jerk behind the head;3;8;1;False
+overhead squat;2;4;1;False
+snatch balance;3;4;1;False

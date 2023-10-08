@@ -10,6 +10,7 @@ class Exercise:
    minRepetitions:int #minimum number or repetitions that can be prescribed in a set
    maxRepetitions:int #maximum number or repetitions that can be prescribed in a set
    Priority:float # float between 0.5 and 1 where 0.5 is the highest and 1 is the lowest. (0.5 means a 2x increase in INOL, so use sparingly)
+   generateWarmup:bool
    def __str__(self):
        return f"{self.Name}"    
    
@@ -19,7 +20,7 @@ with open("Exercises.csv", "r") as ExercisesFile:
     reader = csv.reader(ExercisesFile, delimiter=";")
     
     for row in reader:
-        newExercise = Exercise(str(row[0]), int(row[1]), int(row[2]), float(row[3]))
+        newExercise = Exercise(str(row[0]), int(row[1]), int(row[2]), float(row[3]), bool(row[4]))
         ExerciseList.append(newExercise)
 
 @dataclass
@@ -132,6 +133,13 @@ class DailyExercise:
         self.INOL=round(self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity),1)
         
         self.Name=name
+
+    def __init__(self, name:str, NumberOfSets:int, NumberOfReps:int, Intensity:float, INOL:float):
+        self.Name=name
+        self.NumberOfSets=NumberOfSets
+        self.NumberOfReps=NumberOfReps
+        self.Intensity=Intensity
+        self.INOL=INOL
 
     def __str__(self):
         return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"
