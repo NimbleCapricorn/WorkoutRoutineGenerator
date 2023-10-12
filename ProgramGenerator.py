@@ -1,7 +1,4 @@
 import os
-from prettytable import PrettyTable
-from prettytable import ORGMODE, MARKDOWN, DEFAULT
-from prettytable.colortable import ColorTable, Themes
 import math
 from Difficulty import *
 from WeekClass import *
@@ -20,13 +17,19 @@ from warmup import *
 #Output setup: do you need a simple txt output?
 txt_output=False
 #Input setup: do you use the yaml config or the script inline config?
-yaml_config=False
+yaml_config=True
 if yaml_config:
     with open('ProgramConfig.yml', 'r') as file:
         ProgramConfig = safe_load(file)
         ProgramExerciseList=ProgramConfig['ProgramExerciseList']
         Days=ProgramConfig['Days']
-        Weeks=ProgramConfig['Weeks'] #TODO# weeks should be handles like objects. Right now they are str object, which ofc does not work
+        Weeks=[]
+        for WeekConfigItem in ProgramConfig['Weeks']:
+            VolumeSetting=searchVolumeSetting(WeekConfigItem['Volume'])
+            IntensitySetting=searchIntensitySetting(WeekConfigItem['Intensity'])
+            INOL_TargetSetting=searchINOLSetting(WeekConfigItem['INOL_Target'])
+            Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
+
 if not yaml_config:
     #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
     ProgramExerciseList=["snatch", "snatch pull", "snatch balance", "clean", "clean pull", "front squat", "snatch", "snatch pull", "snatch balance", "jerk", "push press", "squat"]
@@ -52,7 +55,7 @@ for index, week in enumerate(Weeks):
             for DayIterator in DaySettingList: 
                 if DayIterator.name == Day: 
                     DayINOLSetting=DayIterator.DayINOLPriority
-            ListOfTheDaysExercises.append(DailyExercise(exercise, week.volume, week.intensity, week.INOL_Target, DayINOLSetting))
+            ListOfTheDaysExercises.append(DailyExercise(exercise, week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
             #warmup generation, depending on the 
             ListOfTheDaysExercises.extend(GenerateWarmup(ListOfTheDaysExercises[-1]))
         DaysOfProgram.append(ProgramDay(Day, deepcopy(ListOfTheDaysExercises)))
@@ -60,27 +63,6 @@ for index, week in enumerate(Weeks):
     WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 
     DaysOfProgram.clear()
 
-if txt_output:
-    #Create a table with the days and exercises with the exerciselist subsets
-    DailyTableList=[]
-    WeeklyTable=PrettyTable()
-    WeeklyTable.set_style(ORGMODE)
-    WeeklyTable.field_names=Days
-    for week in WeeksOfProgram:
-        for day in week.ProgramDays:
-            DailyTable = PrettyTable()
-            DailyTable.set_style(ORGMODE)
-            DailyTable.field_names=["Exercise", "Sets", "Reps", "PercentageOfOneRepMax","INOL"]
-            for index, exercise in enumerate(day.ExerciseList):
-                DailyTable.add_row([exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL])
-                if(index % windowsize == windowsize - 1 or index==len(day.ExerciseList)-1):
-                    #print(DailyTable)  only here for debugging purposes          
-                    DailyTableList.append(deepcopy(DailyTable))
-                    DailyTable.clear_rows()
-        WeeklyTable.add_row(DailyTableList)
-        DailyTableList.clear()
-    with open("Output.txt", "w") as txtfile:
-        txtfile.write(WeeklyTable.get_string())
 
 #DataFrame implementation        
 path=f"{os.getcwd()}/Output.xlsx"
