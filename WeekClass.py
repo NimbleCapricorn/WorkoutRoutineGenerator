@@ -53,6 +53,7 @@ def searchIntensitySetting(setting:str):
             return Intensity.HEAVYP
         case Intensity.MAX.name:
             return Intensity.MAX
+    return "Intensity setting set in the config file not found"
 
 def searchINOLSetting(setting:str):
     match setting:
@@ -62,3 +63,4 @@ def searchINOLSetting(setting:str):
             return INOL_Target.DailyRecoverable
         case INOL_Target.LoadAccumulating.name:
             return INOL_Target.DailyRecoverable
+    return "INOL_Target setting set in the config file not found"
