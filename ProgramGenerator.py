@@ -14,30 +14,18 @@ from subprocess import *
 from yaml import *
 from warmup import *
 
-#Output setup: do you need a simple txt output?
-txt_output=False
-#Input setup: do you use the yaml config or the script inline config?
-yaml_config=True
-if yaml_config:
-    with open('ProgramConfig.yml', 'r') as file:
-        ProgramConfig = safe_load(file)
-        ProgramExerciseList=ProgramConfig['ProgramExerciseList']
-        Days=ProgramConfig['Days']
-        Weeks=[]
-        for WeekConfigItem in ProgramConfig['Weeks']:
-            VolumeSetting=searchVolumeSetting(WeekConfigItem['Volume'])
-            IntensitySetting=searchIntensitySetting(WeekConfigItem['Intensity'])
-            INOL_TargetSetting=searchINOLSetting(WeekConfigItem['INOL_Target'])
-            Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
+#configuration parsing
+with open('ProgramConfig.yml', 'r') as file:
+    ProgramConfig = safe_load(file)
+    ProgramExerciseList=ProgramConfig['ProgramExerciseList']
+    Days=ProgramConfig['Days']
+    Weeks=[]
+    for WeekConfigItem in ProgramConfig['Weeks']:
+        VolumeSetting=searchVolumeSetting(WeekConfigItem['Volume'])
+        IntensitySetting=searchIntensitySetting(WeekConfigItem['Intensity'])
+        INOL_TargetSetting=searchINOLSetting(WeekConfigItem['INOL_Target'])
+        Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 
-if not yaml_config:
-    #To create a program, fill what exercises you want to do, and what days of the week you want to work out on. Weeks are volume-intensity pairs
-    ProgramExerciseList=["snatch", "snatch pull", "snatch balance", "clean", "clean pull", "front squat", "snatch", "snatch pull", "snatch balance", "jerk", "push press", "squat"]
-
-    Days=["Monday", "Tuesday", "Wednesday", "Friday"]
-
-    #Not advised weekly setting pairings are HIGH volume with MODP and up intensity (except for enhanced athletes), LOW volume with MOD and down intensity (only for deloads)
-    Weeks=[Week(Volume.LOW, Intensity.MOD, INOL_Target.Deload), Week(Volume.MED, Intensity.MOD, INOL_Target.DailyRecoverable), Week(Volume.MED, Intensity.MODP, INOL_Target.DailyRecoverable), Week(Volume.MED, Intensity.LIGHT, INOL_Target.Deload)] 
 
 #Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal parts
 windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) 
