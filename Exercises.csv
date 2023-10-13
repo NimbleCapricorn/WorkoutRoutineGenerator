@@ -1,4 +1,4 @@
-snatch;1;3;1;True
+snatch;1;3;0.9;True
 clean and jerk;1;3;1;;
 clean;2;4;1;;
 jerk;2;4;1;;
@@ -6,7 +6,7 @@ push press;2;4;1;;
 front squat;3;8;1;;
 back squat;3;8;1;;
 squat;3;8;1;;
-clean pull;2;4;1;;
+clean pull;2;4;0.9;;
 snatch pull;2;4;1;;
 snatch deadlift;3;8;1;;
 bent over row;8;12;1;;

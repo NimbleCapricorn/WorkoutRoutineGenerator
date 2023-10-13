@@ -17,8 +17,9 @@ from warmup import *
 #configuration parsing
 with open('ProgramConfig.yml', 'r') as file:
     ProgramConfig = safe_load(file)
-    ProgramExerciseList=ProgramConfig['ProgramExerciseList']
-    Days=ProgramConfig['Days']
+    ProgramSettingDays=[]
+    for DayConfigItem in ProgramConfig['Days']:
+        ProgramSettingDays.append(ProgramSettingDay(DayConfigItem['Name'], DayConfigItem['ExerciseList']))
     Weeks=[]
     for WeekConfigItem in ProgramConfig['Weeks']:
         VolumeSetting=searchVolumeSetting(WeekConfigItem['Volume'])
@@ -26,26 +27,22 @@ with open('ProgramConfig.yml', 'r') as file:
         INOL_TargetSetting=searchINOLSetting(WeekConfigItem['INOL_Target'])
         Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 
-#Overwrite this to make other exercise groupings other than chunking up the ExerciseList into equal parts
-windowsize = math.ceil(len(ProgramExerciseList)/len(Days)) 
-
-
 #Create the program data
 WeeksOfProgram:ProgramWeek=[]
 DaysOfProgram:ProgramDay=[]
 ListOfTheDaysExercises:DailyExercise=[]
 DayINOLSetting:float
 for index, week in enumerate(Weeks):
-    for Day in Days:
-        for exercise in tuple(divide_chunks(ProgramExerciseList, windowsize))[Days.index(Day)]:
+    for Day in ProgramSettingDays:
+        for exercise in Day.ExerciseList:
             #generate the working sets:
             for DayIterator in DaySettingList: 
-                if DayIterator.name == Day: 
+                if DayIterator.name == Day.Name: 
                     DayINOLSetting=DayIterator.DayINOLPriority
             ListOfTheDaysExercises.append(DailyExercise(exercise, week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
             #warmup generation, depending on the 
             ListOfTheDaysExercises.extend(GenerateWarmup(ListOfTheDaysExercises[-1]))
-        DaysOfProgram.append(ProgramDay(Day, deepcopy(ListOfTheDaysExercises)))
+        DaysOfProgram.append(ProgramDay(Day.Name, deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
     WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 
     DaysOfProgram.clear()

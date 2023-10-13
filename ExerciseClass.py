@@ -97,8 +97,8 @@ class DailyExercise:
             while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.4/iterator)):
                 self.NumberOfSets+=1
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.4/iterator)): #dont change this too much, set can't be zero
-                self.NumberOfSets-=1 # if zero, shit hits the fan (NOT CHECKED )
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.4/iterator)): 
+                self.NumberOfSets-=1 
                 if self.NumberOfSets == 0:
                     self.NumberOfSets = 1
                     break

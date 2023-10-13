@@ -18,8 +18,20 @@
 #    LoadAccumulating=1.6    #1.0 to 2.0 is accumulating fatigue, with bigger strength gains (only once you fully recover, though)
                              #above 2.0 lies madness
 
-ProgramExerciseList: ['snatch', 'snatch pull', 'snatch balance', 'clean', 'clean pull', 'front squat', 'snatch', 'snatch pull', 'snatch balance', 'jerk', 'push press', 'squat']
-Days: ['Monday', 'Tuesday', 'Wednesday', 'Friday']
+Days: 
+  - Day1:
+    Name: Monday
+    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+  - Day2:
+    Name: Tuesday
+    ExerciseList: ['clean', 'clean pull', 'front squat']
+  - Day3:
+    Name: Tursday
+    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+  - Day4: 
+    Name: Friday
+    ExerciseList: ['jerk', 'push press', 'squat']
+
 Weeks:
   - Week1:
     Volume: LOW
