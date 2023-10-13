@@ -65,68 +65,25 @@ for weekindex, week in enumerate(WeeksOfProgram):
 Writer=ExcelWriter(path, "xlsxwriter")
 Book=Writer.book
 #Output of the Program:
-Format=Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 2})
+Default_Format=Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 1})
+my_index_cols = ["Day", "Exercise"]
 for weekindex, week in enumerate(WeekList):
-    week.to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=False, header=True, merge_cells=True)
+    week.set_index(my_index_cols).to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=True, header=True, merge_cells=True)
 
 #formatting so that people don't have to set column widths every time they regenerate the program   
 for index, worksheet in enumerate(Book.worksheets()):
     for i, col in enumerate(OneWeek.columns):
         if max(WeekList[index][col].astype(str).str.len()) >= len(WeekList[index].columns[i]):
-            max_len=max(WeekList[index][col].astype(str).str.len())+1
+            max_len=max(WeekList[index][col].astype(str).str.len())+2
         else:
-            max_len = len(WeekList[index].columns[i])  + 1
+            max_len = len(WeekList[index].columns[i])  + 2
         worksheet.set_column(i, i, max_len)
-
-#Merging cells based on headers for less visual clutter
-#TODO# (logically it should work but can't merge a range and then turn it into a table)
-merge_range=False #debugging tool
-merge_tags=["Exercise"]
-if merge_range:
-    for merge_tag in merge_tags:
-        for weekindex, week in enumerate(WeekList):
-            startCells = [1]
-            for row in range(2,len(week)+1):
-                if (week.loc[row-1,merge_tag] != week.loc[row-2,merge_tag]):
-                    startCells.append(row)
-            lastRow = len(week)
-            merge_format = Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 1})
-            worksheet = Writer.sheets[f'Week {weekindex+1}']
-
-            for row in startCells:
-                try:
-                    endRow = startCells[startCells.index(row)+1]-1
-                    if row == endRow:
-                        worksheet.write(row, 0, week.loc[row-1,merge_tag], merge_format)
-                    else:
-                        worksheet.merge_range(row, 0, endRow, 0, week.loc[row-1,merge_tag], merge_format)
-                except IndexError:
-                    if row == lastRow:
-                        worksheet.write(row, 0, week.loc[row-1,merge_tag], merge_format)
-                    else:
-                        worksheet.merge_range(row, 0, lastRow, 0, week.loc[row-1,merge_tag], merge_format)
-Pivot_table=True
-if Pivot_table:
-    my_index_cols = ["Day", "Exercise"] # this can also be a list of multiple columns
-    for week in WeekList:
-        week.set_index(my_index_cols).to_excel('filename.xlsx', index=True, header=True, merge_cells=True)
-
-
-
 
 #Output of WorkoutLog Sheet for tracking the completion of the program
 WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "Weight":[], "OneRepMax":[], "RPE":[], "INOL":[]})
 WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
 for index, worksheet in enumerate(Book.worksheets()):
-    if (index < len(Weeks) ):
-        worksheet.add_table(f'A1:F50', {'columns': [{'header': 'Day'},
-                                                                              {'header': 'Exercise'},
-                                                                              {'header': 'Sets'},
-                                                                              {'header': 'Reps'},
-                                                                              {'header': 'PercentageOfOneRepMax'},
-                                                                              {'header': 'INOL'},
-                                                                             ]})
-    else: 
+    if (index >= len(Weeks) ): 
         INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax])*100)'
         Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
         OneRM_formula = '=IF([RPE]<>"",[Weight]/(1.0278-(0.0278*([Reps]+10-[RPE]))),[Weight]/(1.0278-(0.0278*([Reps]))))'
