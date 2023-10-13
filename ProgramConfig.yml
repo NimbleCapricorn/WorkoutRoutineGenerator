@@ -1,7 +1,7 @@
 #Volume Setting Options:
-#    LOW=3
-#    MED=4
-#    HIGH=5
+#    LOW
+#    MED
+#    HIGH
 
 # Intensity Setting Options:
 #    LIGHT
@@ -26,11 +26,11 @@ Days:
     Name: Tuesday
     ExerciseList: ['clean', 'clean pull', 'front squat']
   - Day3:
-    Name: Tursday
+    Name: Thursday
     ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
   - Day4: 
     Name: Friday
-    ExerciseList: ['jerk', 'push press', 'squat']
+    ExerciseList: ['jerk', 'squat']
 
 Weeks:
   - Week1:
