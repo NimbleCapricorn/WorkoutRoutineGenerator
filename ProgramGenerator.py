@@ -1,3 +1,5 @@
+#!/usr/bin/env python3 
+#this script requires python 3.10+, as match cases are only supported by those versions.
 import os
 import math
 from Difficulty import *
