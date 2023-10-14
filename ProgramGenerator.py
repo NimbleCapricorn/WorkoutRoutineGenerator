@@ -42,7 +42,7 @@ for index, week in enumerate(Weeks):
                 if DayIterator.name == Day.Name: 
                     DayINOLSetting=DayIterator.DayINOLPriority
             ListOfTheDaysExercises.append(DailyExercise(exercise, week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
-            #warmup generation, depending on the 
+            #warmup generation, depending on the setting
             ListOfTheDaysExercises.extend(GenerateWarmup(ListOfTheDaysExercises[-1]))
         DaysOfProgram.append(ProgramDay(Day.Name, deepcopy(ListOfTheDaysExercises)))
         ListOfTheDaysExercises.clear()
