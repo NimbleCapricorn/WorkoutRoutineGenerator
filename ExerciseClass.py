@@ -93,7 +93,7 @@ class DailyExercise:
 
         #Depending on the INOL target setting, to achieve a good stimulus, numbers may need to be bumped up or down as well   
         #Very big error: correct set count
-        for iterator in range(1,3,1):
+        for iterator in range(1,2,1):
             while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.4/iterator)):
                 self.NumberOfSets+=1
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
@@ -107,15 +107,15 @@ class DailyExercise:
 
             #semi-big error: change rep number
             FurtherChangesPossible:bool=True
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.07/iterator) ):
-                if (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.14/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.14/iterator) ):
+                if (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.24/iterator) ):
                     FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps+2)
                 else:
                     FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps+1)
                 self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                 if not FurtherChangesPossible:
                     break
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.1/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.2/iterator) ):
                 FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps-1)
                 self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                 if not FurtherChangesPossible:
@@ -123,10 +123,10 @@ class DailyExercise:
             self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
 
             #small error:change intensity
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.01/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.1/iterator) ):
                 self.Intensity+=0.3
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.01/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.1/iterator) ):
                 self.Intensity-=0.3
                 self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
         
