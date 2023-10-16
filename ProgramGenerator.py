@@ -29,6 +29,9 @@ with open('ProgramConfig.yml', 'r') as file:
         INOL_TargetSetting=searchINOLSetting(WeekConfigItem['INOL_Target'])
         Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 
+#Frontend development flags:
+GenerateWorkoutLog:bool=False
+
 #Create the program data
 ListOfExercises:DailyExercise=[]
 DayINOLSetting:float
@@ -66,30 +69,31 @@ for index, worksheet in enumerate(Book.worksheets()):
             max_len=max(Program[col].astype(str).str.len())+2
         else:
             max_len = len(Program.columns[i])  + 2
-        worksheet.set_column(i, i, max_len)
+        worksheet.set_column(i, max_len)
 
-#Output of WorkoutLog Sheet for tracking the completion of the program
-WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "Weight":[], "OneRepMax":[], "RPE":[], "INOL":[]})
-WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
-for index, worksheet in enumerate(Book.worksheets()):
-    if (index == 1 ): 
-        INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax])*100)'
-        Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
-        OneRM_formula = '=IF([RPE]<>"",[Weight]/(1.0278-(0.0278*([Reps]+10-[RPE]))),[Weight]/(1.0278-(0.0278*([Reps]))))'
-        datetime_format=Book.add_format({'num_format':'mmm d yyyy hh:mm AM/PM'})
+if GenerateWorkoutLog:
+    #Output of WorkoutLog Sheet for tracking the completion of the program
+    WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "Weight":[], "OneRepMax":[], "RPE":[], "INOL":[]})
+    WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
+    for index, worksheet in enumerate(Book.worksheets()):
+        if (index == 1 ): 
+            INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax])*100)'
+            Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
+            OneRM_formula = '=IF([RPE]<>"",[Weight]/(1.0278-(0.0278*([Reps]+10-[RPE]))),[Weight]/(1.0278-(0.0278*([Reps]))))'
+            datetime_format=Book.add_format({'num_format':'mmm d yyyy hh:mm AM/PM'})
 
-        worksheet.add_table('A1:I2', {'columns': [{'header': 'DateTime',
-                                                   'formula': Timestamp_formula,
-                                                   'format': datetime_format},
-                                                  {'header': 'Exercise'},
-                                                  {'header': 'Sets'},
-                                                  {'header': 'Reps'},
-                                                  {'header': 'Weight'},
-                                                  {'header': 'OneRepMax'},
-                                                  {'header': 'RPE'},
-                                                  {'header': 'INOL',
-                                                   'formula':INOL_formula},
-                                                  {'header': 'EstimateOneRM',
-                                                   'formula': OneRM_formula}
-                                                 ]})
+            worksheet.add_table('A1:I2', {'columns': [{'header': 'DateTime',
+                                                    'formula': Timestamp_formula,
+                                                    'format': datetime_format},
+                                                    {'header': 'Exercise'},
+                                                    {'header': 'Sets'},
+                                                    {'header': 'Reps'},
+                                                    {'header': 'Weight'},
+                                                    {'header': 'OneRepMax'},
+                                                    {'header': 'RPE'},
+                                                    {'header': 'INOL',
+                                                    'formula':INOL_formula},
+                                                    {'header': 'EstimateOneRM',
+                                                    'formula': OneRM_formula}
+                                                    ]})
 Writer.close()
