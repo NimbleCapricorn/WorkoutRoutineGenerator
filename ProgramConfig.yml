@@ -30,7 +30,7 @@ Days:
     ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
   - Day4: 
     Name: Friday
-    ExerciseList: ['jerk', 'squat']
+    ExerciseList: ['jerk', 'push press', 'squat']
 
 Weeks:
   - Week1:
