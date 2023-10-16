@@ -3,6 +3,8 @@ from Difficulty import *
 from copy import deepcopy
 #warmup generation
 class Warmup(DailyExercise):
+    WeekIndex:int=[]
+    Day:str=[]
     Name:str=[]
     NumberOfSets:int=[]
     NumberOfReps:int=[]
@@ -11,6 +13,8 @@ class Warmup(DailyExercise):
     NumberOfWarmupSets:int=4
 
     def __init__(self, ParentExercise:DailyExercise):
+        self.WeekIndex.clear()
+        self.Day.clear()
         self.Name.clear()
         self.NumberOfSets.clear()
         self.NumberOfReps.clear()
@@ -19,6 +23,8 @@ class Warmup(DailyExercise):
         
         WarmupIntensity=IntensityList[6] #LightPIntensity
         for iterator in range(0, self.NumberOfWarmupSets, 1):
+            self.WeekIndex.append(ParentExercise.WeekIndex)
+            self.Day.append(ParentExercise.Day)
             self.Name.append(ParentExercise.Name)
             self.NumberOfSets.append(1)
             self.NumberOfReps.append((self.NumberOfWarmupSets-iterator))
@@ -28,7 +34,7 @@ class Warmup(DailyExercise):
     def getWarmupExercises(self):
         WarmupExerciseList:DailyExercise=[]
         for iterator in range(0, self.NumberOfWarmupSets, 1):
-            WarmupExerciseList.append(deepcopy(DailyExercise.from_args(self.Name[iterator], self.NumberOfSets[iterator], self.NumberOfReps[iterator], self.Intensity[iterator], self.INOL[iterator])))
+            WarmupExerciseList.append(deepcopy(DailyExercise.from_args(self.WeekIndex[iterator], self.Day[iterator], self.Name[iterator], self.NumberOfSets[iterator], self.NumberOfReps[iterator], self.Intensity[iterator], self.INOL[iterator])))
         return WarmupExerciseList 
         
 def GenerateWarmup(CallingExercise:DailyExercise):

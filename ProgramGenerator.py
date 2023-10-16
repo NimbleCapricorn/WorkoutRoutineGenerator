@@ -30,35 +30,26 @@ with open('ProgramConfig.yml', 'r') as file:
         Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 
 #Create the program data
-WeeksOfProgram:ProgramWeek=[]
-DaysOfProgram:ProgramDay=[]
-ListOfTheDaysExercises:DailyExercise=[]
+ListOfExercises:DailyExercise=[]
 DayINOLSetting:float
-for index, week in enumerate(Weeks):
+for weekindex, week in enumerate(Weeks):
     for Day in ProgramSettingDays:
         for exercise in Day.ExerciseList:
             #generate the working sets:
             for DayIterator in DaySettingList: 
                 if DayIterator.name == Day.Name: 
                     DayINOLSetting=DayIterator.DayINOLPriority
-            ListOfTheDaysExercises.append(DailyExercise(exercise, week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
+            ListOfExercises.append(DailyExercise(weekindex, Day.Name, exercise, week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
             #warmup generation, depending on the setting
-            ListOfTheDaysExercises.extend(GenerateWarmup(ListOfTheDaysExercises[-1]))
-        DaysOfProgram.append(ProgramDay(Day.Name, deepcopy(ListOfTheDaysExercises)))
-        ListOfTheDaysExercises.clear()
-    WeeksOfProgram.append(ProgramWeek(index, deepcopy(DaysOfProgram))) 
-    DaysOfProgram.clear()
+            ListOfExercises.extend(GenerateWarmup(ListOfExercises[-1]))
 
 
 #DataFrame implementation        
 path=f"{os.getcwd()}/Output.xlsx"
-WeekList=[]
-for weekindex, week in enumerate(WeeksOfProgram):
-    OneWeek=DataFrame(data={"Day":[], "Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
-    for dayindex, day in enumerate(week.ProgramDays):
-        for index, exercise in enumerate(day.ExerciseList):
-            OneWeek=concat([OneWeek, DataFrame([[day.Name, exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL ]], columns=OneWeek.columns)], ignore_index=True)
-    WeekList.append(deepcopy(OneWeek))
+Program=DataFrame(data={"Week":[], "Day":[], "Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
+for index, exercise in enumerate(ListOfExercises):
+    Program=concat([Program, DataFrame([[exercise.WeekIndex, exercise.Day, exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL ]], columns=Program.columns)], ignore_index=True)
+
 
 
 Writer=ExcelWriter(path, "xlsxwriter")
@@ -66,23 +57,22 @@ Book=Writer.book
 #Output of the Program:
 Default_Format=Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 1})
 my_index_cols = ["Day", "Exercise"]
-for weekindex, week in enumerate(WeekList):
-    week.set_index(my_index_cols).to_excel(Writer, sheet_name=f"Week {weekindex+1}", index=True, header=True, merge_cells=True)
+Program.set_index(my_index_cols).to_excel(Writer, sheet_name="Program", index=True, header=True, merge_cells=True)
 
 #formatting so that people don't have to set column widths every time they regenerate the program   
 for index, worksheet in enumerate(Book.worksheets()):
-    for i, col in enumerate(OneWeek.columns):
-        if max(WeekList[index][col].astype(str).str.len()) >= len(WeekList[index].columns[i]):
-            max_len=max(WeekList[index][col].astype(str).str.len())+2
+    for i, col in enumerate(Program.columns):
+        if max(Program[col].astype(str).str.len()) >= len(Program.columns[i]):
+            max_len=max(Program[col].astype(str).str.len())+2
         else:
-            max_len = len(WeekList[index].columns[i])  + 2
+            max_len = len(Program.columns[i])  + 2
         worksheet.set_column(i, i, max_len)
 
 #Output of WorkoutLog Sheet for tracking the completion of the program
 WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "Weight":[], "OneRepMax":[], "RPE":[], "INOL":[]})
 WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
 for index, worksheet in enumerate(Book.worksheets()):
-    if (index >= len(Weeks) ): 
+    if (index == 1 ): 
         INOL_formula = '=([Sets]*[Reps])/(100-([Weight]/[OneRepMax])*100)'
         Timestamp_formula = '=IF([Exercise]<>"",IF([DateTime]="",NOW(),[DateTime]),"")'
         OneRM_formula = '=IF([RPE]<>"",[Weight]/(1.0278-(0.0278*([Reps]+10-[RPE]))),[Weight]/(1.0278-(0.0278*([Reps]))))'

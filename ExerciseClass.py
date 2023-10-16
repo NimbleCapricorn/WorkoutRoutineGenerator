@@ -26,6 +26,8 @@ with open("Exercises.csv", "r") as ExercisesFile:
 
 @dataclass
 class DailyExercise:
+    WeekIndex:int
+    Day:str
     Name:str
     NumberOfSets:int
     NumberOfReps:int
@@ -60,8 +62,10 @@ class DailyExercise:
             FurtherChangesPossible=False
         return FurtherChangesPossible
 
-    def __init__(self, name, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL_Target, DayINOLSetting:float):
+    def __init__(self, weeknumber, day, name, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL_Target, DayINOLSetting:float):
         #temporary values to make calcuations easier
+        self.WeekIndex=weeknumber
+        self.Day=day
         temporaryExercise:Exercise
         IntermittentIntensity:IntensityFunction
         self.NumberOfSets=VolumeSetting.value
@@ -136,8 +140,10 @@ class DailyExercise:
         self.Name=name
 
     @classmethod
-    def from_args(cls, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOL:float): 
-        instance=cls("snatch", Volume.LOW, Intensity.MOD, INOL_Target.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+    def from_args(cls, weekindex:int, day:str, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOL:float): 
+        instance=cls(0, "Monday", "snatch", Volume.LOW, Intensity.MOD, INOL_Target.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+        instance.WeekIndex=weekindex
+        instance.Day=day
         instance.Name=name
         instance.NumberOfSets=NumberOfSets
         instance.NumberOfReps=NumberOfReps
