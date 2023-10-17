@@ -1,0 +1,91 @@
+Exercises:
+  - Name: snatch
+    minRepetitions: 1 #minimum number or repetitions that can be prescribed in a set
+    maxRepetitions: 4 #maximum number or repetitions that can be prescribed in a set
+    Priority: 0.95 # float between 0.5 and 1 where 0.5 is the highest and 1 is the lowest. (0.5 means a 2x increase in INOL, so use sparingly)
+    generateWarmup: True
+  - Name: clean and jerk
+    minRepetitions: 1 
+    maxRepetitions: 4 
+    Priority: 0.95 
+    generateWarmup: True
+  - Name: clean
+    minRepetitions: 2 
+    maxRepetitions: 4 
+    Priority: 1.0 
+    generateWarmup: True
+  - Name: jerk
+    minRepetitions: 2 
+    maxRepetitions: 4 
+    Priority: 1.0 
+    generateWarmup: True
+  - Name: push press
+    minRepetitions: 3 
+    maxRepetitions: 5 
+    Priority: 1.0 
+    generateWarmup: True
+  - Name: front squat
+    minRepetitions: 3 
+    maxRepetitions: 8 
+    Priority: 1.0 
+    generateWarmup: True
+  - Name: back squat
+    minRepetitions: 3 
+    maxRepetitions: 8 
+    Priority: 1.0 
+    generateWarmup: True
+  - Name: squat
+    minRepetitions: 3 
+    maxRepetitions: 8 
+    Priority: 1.0 
+    generateWarmup: True
+  - Name: clean pull
+    minRepetitions: 2 
+    maxRepetitions: 5 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: snatch pull
+    minRepetitions: 2 
+    maxRepetitions: 5 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: snatch deadlift
+    minRepetitions: 2 
+    maxRepetitions: 8 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: bent over row
+    minRepetitions: 5 
+    maxRepetitions: 10 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: hip thrust
+    minRepetitions: 5 
+    maxRepetitions: 10 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: OHP
+    minRepetitions: 3 
+    maxRepetitions: 8 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: clean pull to hip
+    minRepetitions: 2 
+    maxRepetitions: 5 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: jerk behind the head
+    minRepetitions: 2 
+    maxRepetitions: 5 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: overhead squat
+    minRepetitions: 1 
+    maxRepetitions: 3 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: snatch balance
+    minRepetitions: 2 
+    maxRepetitions: 4 
+    Priority: 1.0 
+    generateWarmup: False    
