@@ -1,5 +1,5 @@
 from dataclasses import *
-import csv
+from yaml import *
 from Difficulty import *
 from ExerciseClass import *
 from WeekClass import *
@@ -14,15 +14,13 @@ class Exercise:
    generateWarmup:bool
    def __str__(self):
        return f"{self.Name}"    
-   
-#read exercises
-ExerciseList:Exercise=[]
-with open("Exercises.csv", "r") as ExercisesFile:
-    reader = csv.reader(ExercisesFile, delimiter=";")
-    
-    for row in reader:
-        newExercise = Exercise(str(row[0]), int(row[1]), int(row[2]), float(row[3]), bool(row[4]))
-        ExerciseList.append(newExercise)
+
+#import exercise settings   
+with open('Exercises.yml', 'r') as file:
+    ProgramConfig = safe_load(file)
+    ExerciseList=[]
+    for ExerciseConfigItem in ProgramConfig['Exercises']:
+        ExerciseList.append(Exercise(ExerciseConfigItem['Name'], ExerciseConfigItem['minRepetitions'], ExerciseConfigItem['maxRepetitions'], ExerciseConfigItem['Priority'], ExerciseConfigItem['generateWarmup']))
 
 @dataclass
 class DailyExercise:
