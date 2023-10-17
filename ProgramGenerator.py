@@ -30,7 +30,8 @@ with open('ProgramConfig.yml', 'r') as file:
         Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 
 #Frontend development flags:
-GenerateWorkoutLog:bool=False
+generateWorkoutLog:bool=False
+generateExcelOutput:bool=True
 
 #Create the program data
 ListOfExercises:DailyExercise=[]
@@ -54,24 +55,25 @@ for index, exercise in enumerate(ListOfExercises):
     Program=concat([Program, DataFrame([[exercise.WeekIndex, exercise.Day, exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL ]], columns=Program.columns)], ignore_index=True)
 
 
-
+#Excel file generation
 Writer=ExcelWriter(path, "xlsxwriter")
 Book=Writer.book
-#Output of the Program:
 Default_Format=Book.add_format({'align': 'center', 'valign': 'vcenter', 'border': 1})
-my_index_cols = ["Day", "Exercise"]
-Program.set_index(my_index_cols).to_excel(Writer, sheet_name="Program", index=True, header=True, merge_cells=True)
 
-#formatting so that people don't have to set column widths every time they regenerate the program   
-for index, worksheet in enumerate(Book.worksheets()):
-    for i, col in enumerate(Program.columns):
-        if max(Program[col].astype(str).str.len()) >= len(Program.columns[i]):
-            max_len=max(Program[col].astype(str).str.len())+2
-        else:
-            max_len = len(Program.columns[i])  + 2
-        worksheet.set_column(i, max_len)
+if generateExcelOutput:
+    #Excel output of the Program:
+    my_index_cols = ["Day", "Exercise"]
+    Program.set_index(my_index_cols).to_excel(Writer, sheet_name="Program", index=True, header=True, merge_cells=True)
 
-if GenerateWorkoutLog:
+    #formatting so that people don't have to set column widths every time they regenerate the program   
+    for index, worksheet in enumerate(Book.worksheets()):
+        for i, col in enumerate(Program.columns):
+            if max(Program[col].astype(str).str.len()) >= len(Program.columns[i]):
+                max_len=max(Program[col].astype(str).str.len())+2
+            else:
+                max_len = len(Program.columns[i])  + 2
+            worksheet.set_column(i, max_len)
+if generateWorkoutLog:
     #Output of WorkoutLog Sheet for tracking the completion of the program
     WorkoutLog=DataFrame(data={"DateTime":[], "Exercise":[], "Sets":[], "Reps":[], "Weight":[], "OneRepMax":[], "RPE":[], "INOL":[]})
     WorkoutLog.to_excel(Writer, sheet_name="WorkoutLog", index=False, header=True)
