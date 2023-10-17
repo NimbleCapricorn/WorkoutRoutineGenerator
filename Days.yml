@@ -1,13 +1,22 @@
 Weekdays: 
   - Day1:
     Name: Monday
-    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+    INOL_Priority: 1.0
   - Day2:
     Name: Tuesday
-    ExerciseList: ['clean', 'clean pull', 'front squat']
+    INOL_Priority: 1.0
   - Day3:
+    Name: Wednesday
+    INOL_Priority: 1.0
+  - Day4:
     Name: Thursday
-    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
-  - Day4: 
+    INOL_Priority: 1.0
+  - Day5:
     Name: Friday
-    ExerciseList: ['jerk', 'push press', 'squat']
+    INOL_Priority: 1.0
+  - Day6:
+    Name: Saturday
+    INOL_Priority: 1.0
+  - Day7:
+    Name: Sunday
+    INOL_Priority: 1.0
