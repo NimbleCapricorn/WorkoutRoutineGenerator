@@ -18,7 +18,7 @@
 #    LoadAccumulating=1.6    #1.0 to 2.0 is accumulating fatigue, with bigger strength gains (only once you fully recover, though)
                              #above 2.0 lies madness
 
-Days: 
+Workoutdays: 
   - Day1:
     Name: Monday
     ExerciseList: ['snatch', 'snatch pull', 'snatch balance']

@@ -1,0 +1,13 @@
+Weekdays: 
+  - Day1:
+    Name: Monday
+    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+  - Day2:
+    Name: Tuesday
+    ExerciseList: ['clean', 'clean pull', 'front squat']
+  - Day3:
+    Name: Thursday
+    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+  - Day4: 
+    Name: Friday
+    ExerciseList: ['jerk', 'push press', 'squat']

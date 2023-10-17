@@ -20,7 +20,7 @@ from warmup import *
 with open('ProgramConfig.yml', 'r') as file:
     ProgramConfig = safe_load(file)
     ProgramSettingDays=[]
-    for DayConfigItem in ProgramConfig['Days']:
+    for DayConfigItem in ProgramConfig['Workoutdays']:
         ProgramSettingDays.append(ProgramSettingDay(DayConfigItem['Name'], DayConfigItem['ExerciseList']))
     Weeks=[]
     for WeekConfigItem in ProgramConfig['Weeks']:
