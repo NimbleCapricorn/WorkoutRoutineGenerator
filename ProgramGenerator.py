@@ -31,7 +31,7 @@ with open('ProgramConfig.yml', 'r') as file:
 
 #Frontend development flags:
 generateWorkoutLog:bool=False
-generateExcelOutput:bool=True
+generateExcelOutput:bool=False
 
 #Create the program data
 ListOfExercises:DailyExercise=[]
