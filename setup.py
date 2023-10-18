@@ -20,16 +20,16 @@ setup(
     ],
     install_requires=[
         #exact versions in the requirements.txt file
-        "numpy"
-        "pandas"
-        "python-dateutil"
-        "pytz"
-        "PyYAML"
-        "six"
-        "tablib"
-        "tzdata"
-        "wcwidth"
-        "XlsxWriter"
+        "numpy",
+        "pandas",
+        "python-dateutil",
+        "pytz",
+        "PyYAML",
+        "six",
+        "tablib",
+        "tzdata",
+        "wcwidth",
+        "XlsxWriter",
 
     ],
     python_requires='>=3.10',
