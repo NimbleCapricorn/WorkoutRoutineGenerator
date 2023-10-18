@@ -1,11 +1,9 @@
 #!/usr/bin/env python3 
 #this script requires python 3.10+, as match cases are only supported by those versions.
 import os
-import math
 from Difficulty import *
 from WeekClass import *
 from DayClass import *
-from ExerciseListDividerFunctions import *
 from ExerciseClass import *
 from copy import *
 from ProgramDataStructure import *
@@ -31,7 +29,7 @@ with open('ProgramConfig.yml', 'r') as file:
 
 #Frontend development flags:
 generateWorkoutLog:bool=False
-generateExcelOutput:bool=False
+generateExcelOutput:bool=True
 
 #Create the program data
 ListOfExercises:DailyExercise=[]
