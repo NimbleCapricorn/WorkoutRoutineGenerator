@@ -1,9 +1,7 @@
 from dataclasses import *
 from yaml import *
-from Difficulty import *
-from ExerciseClass import *
-from WeekClass import *
-from copy import deepcopy
+from .difficulty import Difficulty, enumdefinitions
+from .difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
 
 @dataclass
 class Exercise:
@@ -15,12 +13,6 @@ class Exercise:
    def __str__(self):
        return f"{self.Name}"    
 
-#import exercise settings   
-with open('Exercises.yml', 'r') as file:
-    ProgramConfig = safe_load(file)
-    ExerciseList=[]
-    for ExerciseConfigItem in ProgramConfig['Exercises']:
-        ExerciseList.append(Exercise(ExerciseConfigItem['Name'], ExerciseConfigItem['minRepetitions'], ExerciseConfigItem['maxRepetitions'], ExerciseConfigItem['Priority'], ExerciseConfigItem['generateWarmup']))
 
 @dataclass
 class DailyExercise:
@@ -60,33 +52,29 @@ class DailyExercise:
             FurtherChangesPossible=False
         return FurtherChangesPossible
 
-    def __init__(self, weeknumber, day, name, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL_Target, DayINOLSetting:float):
+    def __init__(self, weeknumber, day, CallingExercise, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL_Target, DayINOLSetting:float):
         #temporary values to make calcuations easier
         self.WeekIndex=weeknumber
         self.Day=day
-        temporaryExercise:Exercise
-        IntermittentIntensity:IntensityFunction
+        IntermittentIntensity:Difficulty.IntensityFunction
         self.NumberOfSets=VolumeSetting.value
-        #find which exercise it is  ##TODO## what happens if we can't find the exercise?
-        for ExerciseIterator in ExerciseList: 
-            if ExerciseIterator.Name == name: 
-                temporaryExercise=ExerciseIterator
 
-        INOL_TargetWithPriority=INOL_Target.value/(temporaryExercise.Priority*DayINOLSetting)
+
+        INOL_TargetWithPriority=INOL_Target.value/(CallingExercise.Priority*DayINOLSetting)
 
         #determine best rep number for the volume setting
         match VolumeSetting.name: 
             case Volume.LOW.name:
-                self.NumberOfReps=temporaryExercise.maxRepetitions
+                self.NumberOfReps=CallingExercise.maxRepetitions
             case Volume.MED.name:
-                self.NumberOfReps=round((temporaryExercise.maxRepetitions+temporaryExercise.minRepetitions)/2)
+                self.NumberOfReps=round((CallingExercise.maxRepetitions+CallingExercise.minRepetitions)/2)
             case Volume.HIGH.name:
-                self.NumberOfReps=temporaryExercise.minRepetitions
+                self.NumberOfReps=CallingExercise.minRepetitions
 
 
 
         #calculate intensity based on determined repcount and given intensity setting
-        for IntensityIterator in IntensityList:
+        for IntensityIterator in Difficulty.IntensityList:
             if  IntensityIterator.name == IntensitySetting.name:
                 IntermittentIntensity=IntensityIterator
         self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
@@ -111,14 +99,14 @@ class DailyExercise:
             FurtherChangesPossible:bool=True
             while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.14/iterator) ):
                 if (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.24/iterator) ):
-                    FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps+2)
+                    FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+2)
                 else:
-                    FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps+1)
+                    FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+1)
                 self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                 if not FurtherChangesPossible:
                     break
             while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.2/iterator) ):
-                FurtherChangesPossible=self.SetNumberOfReps(temporaryExercise, self.NumberOfReps-1)
+                FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps-1)
                 self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                 if not FurtherChangesPossible:
                     break
@@ -135,11 +123,11 @@ class DailyExercise:
         self.Intensity=round(self.Intensity,1)
         self.INOL=round(self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity),1)
         
-        self.Name=name
+        self.Name=CallingExercise.Name
 
     @classmethod
     def from_args(cls, weekindex:int, day:str, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOL:float): 
-        instance=cls(0, "Monday", "snatch", Volume.LOW, Intensity.MOD, INOL_Target.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOL_Target.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
         instance.WeekIndex=weekindex
         instance.Day=day
         instance.Name=name
@@ -152,3 +140,7 @@ class DailyExercise:
     def __str__(self):
         return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"
     
+@dataclass
+class ProgramSettingDay:
+    Name:str
+    ExerciseList:str

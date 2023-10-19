@@ -1,38 +1,54 @@
 #!/usr/bin/env python3 
 #this script requires python 3.10+, as match cases are only supported by those versions.
 import os
-from Difficulty import *
-from WeekClass import *
-from DayClass import *
-from ExerciseClass import *
 from copy import *
-from ProgramDataStructure import *
 from tablib import *
 from xlsxwriter import *
 from pandas import *
 from subprocess import *
 from yaml import *
-from warmup import *
+from workoutroutinegenerator import WeekClass, DayClass, Warmup
+from workoutroutinegenerator.exerciseclass import ExerciseClass
+
+
+#function definitions:
+def findExercise(searching:ExerciseClass.Exercise):
+    for Exercise in ExerciseList:
+        if Exercise.Name==searching:
+            return Exercise
+
+#import exercise settings   
+with open('Exercises.yml', 'r') as file:
+    ProgramConfig = safe_load(file)
+    ExerciseList=[]
+    for ExerciseConfigItem in ProgramConfig['Exercises']:
+        ExerciseList.append(ExerciseClass.Exercise(ExerciseConfigItem['Name'], ExerciseConfigItem['minRepetitions'], ExerciseConfigItem['maxRepetitions'], ExerciseConfigItem['Priority'], ExerciseConfigItem['generateWarmup']))
+
+with open('Days.yml', 'r') as file:
+    ProgramConfig = safe_load(file)
+    DaySettingList=[]
+    for DayConfigItem in ProgramConfig['Weekdays']:
+        DaySettingList.append(DayClass.DayClass(DayConfigItem['Name'], DayConfigItem['INOL_Priority']))
 
 #configuration parsing
 with open('ProgramConfig.yml', 'r') as file:
     ProgramConfig = safe_load(file)
     ProgramSettingDays=[]
     for DayConfigItem in ProgramConfig['Workoutdays']:
-        ProgramSettingDays.append(ProgramSettingDay(DayConfigItem['Name'], DayConfigItem['ExerciseList']))
+        ProgramSettingDays.append(ExerciseClass.ProgramSettingDay(DayConfigItem['Name'], DayConfigItem['ExerciseList']))
     Weeks=[]
     for WeekConfigItem in ProgramConfig['Weeks']:
-        VolumeSetting=searchVolumeSetting(WeekConfigItem['Volume'])
-        IntensitySetting=searchIntensitySetting(WeekConfigItem['Intensity'])
-        INOL_TargetSetting=searchINOLSetting(WeekConfigItem['INOL_Target'])
-        Weeks.append(Week(VolumeSetting, IntensitySetting, INOL_TargetSetting))
+        VolumeSetting=WeekClass.searchVolumeSetting(WeekConfigItem['Volume'])
+        IntensitySetting=WeekClass.searchIntensitySetting(WeekConfigItem['Intensity'])
+        INOL_TargetSetting=WeekClass.searchINOLSetting(WeekConfigItem['INOL_Target'])
+        Weeks.append(WeekClass.WeekSetting(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 
 #Frontend development flags:
 generateWorkoutLog:bool=False
 generateExcelOutput:bool=True
 
 #Create the program data
-ListOfExercises:DailyExercise=[]
+ListOfExercises:ExerciseClass.DailyExercise=[]
 DayINOLSetting:float
 for weekindex, week in enumerate(Weeks):
     for Day in ProgramSettingDays:
@@ -41,9 +57,10 @@ for weekindex, week in enumerate(Weeks):
             for DayIterator in DaySettingList: 
                 if DayIterator.name == Day.Name: 
                     DayINOLSetting=DayIterator.DayINOLPriority
-            ListOfExercises.append(DailyExercise(weekindex, Day.Name, exercise, week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
+            ListOfExercises.append(ExerciseClass.DailyExercise(weekindex, Day.Name, findExercise(exercise), week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
             #warmup generation, depending on the setting
-            ListOfExercises.extend(GenerateWarmup(ListOfExercises[-1]))
+            if findExercise(exercise).generateWarmup:
+                ListOfExercises.extend(Warmup.GenerateWarmup(ListOfExercises[-1]))
 
 
 #DataFrame implementation        

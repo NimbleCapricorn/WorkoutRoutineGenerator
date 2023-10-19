@@ -1,8 +1,9 @@
 import numpy as np
-from WeekClass import *
+from .enumdefinitions import EnumDefinitions
+
 
 class IntensityFunction:
-   name:Intensity
+   name:EnumDefinitions.Intensity
    IntensityFunction=np.poly((0,0,0,0))
    def __init__(self, name, amplitudes):
       self.name=name
