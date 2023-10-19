@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "numpy==1.26.0", "pandas==2.1.1", "prettytable==3.9.0", "python-dateutil==2.8.2", "pytz==2023.3.post1", "PyYAML==6.0.1", "six==1.16.0", "tablib==3.5.0", "tzdata==2023.3", "wcwidth==0.2.8", "XlsxWriter==3.1.6"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "workoutroutinegenerator"
+version = "0.0.1"
+authors = [
+  { name="Nimble Capricorn", email="nimble.capricorn@gmail.com" },
+]
+description = "A workout routine generator"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/NimbleCapricorn/WorkoutRoutineGenerator"
+"Bug Tracker" = "https://github.com/NimbleCapricorn/WorkoutRoutineGenerator/issues"
