@@ -1,6 +1,6 @@
 from dataclasses import *
 from yaml import *
-from .difficulty import Difficulty, enumdefinitions
+from .difficulty import Difficulty
 from .difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
 
 @dataclass
