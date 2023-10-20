@@ -9,45 +9,54 @@ from subprocess import *
 from yaml import *
 from workoutroutinegenerator import WeekClass, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
+from fastapi import FastAPI
 
 
-#function definitions:
+##function definitions:##
 def findExercise(searching:ExerciseClass.Exercise):
     for Exercise in ExerciseList:
         if Exercise.Name==searching:
             return Exercise
+##########################
 
+##config parsing##
 #import exercise settings   
 with open('Exercises.yml', 'r') as file:
     ProgramConfig = safe_load(file)
     ExerciseList=[]
     for ExerciseConfigItem in ProgramConfig['Exercises']:
-        ExerciseList.append(ExerciseClass.Exercise(ExerciseConfigItem['Name'], ExerciseConfigItem['minRepetitions'], ExerciseConfigItem['maxRepetitions'], ExerciseConfigItem['Priority'], ExerciseConfigItem['generateWarmup']))
-
+        ExerciseList.append(ExerciseClass.Exercise( ExerciseConfigItem['Name'],
+                                                    ExerciseConfigItem['minRepetitions'],
+                                                    ExerciseConfigItem['maxRepetitions'], 
+                                                    ExerciseConfigItem['Priority'], 
+                                                    ExerciseConfigItem['generateWarmup']))
+#import Day settings
 with open('Days.yml', 'r') as file:
     ProgramConfig = safe_load(file)
     DaySettingList=[]
     for DayConfigItem in ProgramConfig['Weekdays']:
-        DaySettingList.append(DayClass.DayClass(DayConfigItem['Name'], DayConfigItem['INOL_Priority']))
+        DaySettingList.append(DayClass.DayClass(DayConfigItem['Name'],
+                                                DayConfigItem['INOL_Priority']))
 
-#configuration parsing
+#program block setting parsing
 with open('ProgramConfig.yml', 'r') as file:
     ProgramConfig = safe_load(file)
     ProgramSettingDays=[]
     for DayConfigItem in ProgramConfig['Workoutdays']:
-        ProgramSettingDays.append(ExerciseClass.ProgramSettingDay(DayConfigItem['Name'], DayConfigItem['ExerciseList']))
+        ProgramSettingDays.append(ExerciseClass.ProgramSettingDay(DayConfigItem['Name'],
+                                                                  DayConfigItem['ExerciseList']))
     Weeks=[]
     for WeekConfigItem in ProgramConfig['Weeks']:
         VolumeSetting=WeekClass.searchVolumeSetting(WeekConfigItem['Volume'])
         IntensitySetting=WeekClass.searchIntensitySetting(WeekConfigItem['Intensity'])
         INOL_TargetSetting=WeekClass.searchINOLSetting(WeekConfigItem['INOL_Target'])
         Weeks.append(WeekClass.WeekSetting(VolumeSetting, IntensitySetting, INOL_TargetSetting))
-
+##################################################
 #Frontend development flags:
 generateWorkoutLog:bool=False
 generateExcelOutput:bool=True
-
-#Create the program data
+##################################################
+## program data creation
 ListOfExercises:ExerciseClass.DailyExercise=[]
 DayINOLSetting:float
 for weekindex, week in enumerate(Weeks):
@@ -62,13 +71,21 @@ for weekindex, week in enumerate(Weeks):
             if findExercise(exercise).generateWarmup:
                 ListOfExercises.extend(Warmup.GenerateWarmup(ListOfExercises[-1]))
 
-
 #DataFrame implementation        
 path=f"{os.getcwd()}/Output.xlsx"
 Program=DataFrame(data={"Week":[], "Day":[], "Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
 for index, exercise in enumerate(ListOfExercises):
-    Program=concat([Program, DataFrame([[exercise.WeekIndex, exercise.Day, exercise.Name, exercise.NumberOfSets, exercise.NumberOfReps, exercise.Intensity, exercise.INOL ]], columns=Program.columns)], ignore_index=True)
-
+    Program=concat([Program, 
+                    DataFrame([[exercise.WeekIndex,
+                                exercise.Day,
+                                exercise.Name,
+                                exercise.NumberOfSets, 
+                                exercise.NumberOfReps,
+                                exercise.Intensity,
+                                exercise.INOL ]],
+                            columns=Program.columns)],
+                    ignore_index=True)
+####################################################
 
 #Excel file generation
 Writer=ExcelWriter(path, "xlsxwriter")
@@ -114,3 +131,14 @@ if generateWorkoutLog:
                                                     'formula': OneRM_formula}
                                                     ]})
 Writer.close()
+
+#API 
+app=FastAPI()
+
+@app.get("/")
+def home():
+    return {"Data": "Test"}
+
+@app.get("/about")
+def about():
+    return {"Data": "This page shows general information about the webservice"}
