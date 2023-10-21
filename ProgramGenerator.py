@@ -3,7 +3,6 @@
 import os
 from copy import *
 from tablib import *
-from xlsxwriter import *
 from pandas import *
 from subprocess import *
 from yaml import *
@@ -131,7 +130,7 @@ if generateWorkoutLog:
                                                     'formula': OneRM_formula}
                                                     ]})
 Writer.close()
-
+####################################################
 #API 
 app=FastAPI()
 
@@ -142,3 +141,9 @@ def home():
 @app.get("/about")
 def about():
     return {"Data": "This page shows general information about the webservice"}
+
+@app.get("/get_exercise/{exercise}")
+def get_exercise(requested_exercise:str):
+    for exercise in ExerciseList:
+        if exercise.Name==requested_exercise:
+            return f'{exercise.Name}' #not found, because the ExerciseList is not populated in the API
