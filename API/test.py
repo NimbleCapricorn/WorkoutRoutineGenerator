@@ -41,11 +41,11 @@ app=FastAPI()
 
 @app.get("/")
 def home():
-    return {"Data": "Test"}
+    return {"Data": "This is the homepage of the WorkoutRoutineGenerator application"}
 
 @app.get("/about")
 def about():
-    return {"Data": "This page shows general information about the webservice"}
+    return {"Data": "This application creates a WorkoutProgram with preferences you set up"}
 
 @app.get("/get-exercise")
 def get_exercise(requested_exercise: str):
