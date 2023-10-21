@@ -37,7 +37,7 @@ with open('Days.yml', 'r') as file:
 
 ####################################
 ##Program Settings##
-Weeks:ProgramSettingWeek=[]
+Weeks:ProgramSettingWeek.ProgramSettingWeek=[]
 Days:ExerciseClass.ProgramSettingDay=[]
 
 #API 
@@ -60,3 +60,12 @@ def add_exercise(name:str, minreps:int, maxreps:int, priority:float, warmup:bool
     exercise_to_add=ExerciseClass.Exercise(name, minreps, maxreps, priority, warmup)
     ExerciseList.append(exercise_to_add)
     return exercise_to_add
+
+@app.post("/add-workout-week")
+def add_workout_week(VolumeSettingName:str, IntensitySettingName:str, INOLSettingName:str):
+    VolumeSetting=ProgramSettingWeek.searchVolumeSetting(VolumeSettingName)
+    IntensitySetting=ProgramSettingWeek.searchIntensitySetting(IntensitySettingName)
+    INOLSetting=ProgramSettingWeek.searchINOLSetting(INOLSettingName)
+    week_to_add = ProgramSettingWeek.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting)
+    Weeks.add(week_to_add)
+    return week_to_add
