@@ -1,0 +1,22 @@
+Weekdays: 
+  - Day1:
+    Name: Monday
+    INOL_Priority: 1.0
+  - Day2:
+    Name: Tuesday
+    INOL_Priority: 1.0
+  - Day3:
+    Name: Wednesday
+    INOL_Priority: 1.0
+  - Day4:
+    Name: Thursday
+    INOL_Priority: 1.0
+  - Day5:
+    Name: Friday
+    INOL_Priority: 1.0
+  - Day6:
+    Name: Saturday
+    INOL_Priority: 1.0
+  - Day7:
+    Name: Sunday
+    INOL_Priority: 1.0

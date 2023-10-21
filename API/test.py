@@ -17,8 +17,25 @@ def findExercise(searching:str):
             return Exercise.Name
     return "Exercise not found"
 ##########################
+##Application data and config read##
+with open('Exercises.yml', 'r') as file:
+    ProgramConfig = safe_load(file)
+    ExerciseList=[]
+    for ExerciseConfigItem in ProgramConfig['Exercises']:
+        ExerciseList.append(ExerciseClass.Exercise( ExerciseConfigItem['Name'],
+                                                    ExerciseConfigItem['minRepetitions'],
+                                                    ExerciseConfigItem['maxRepetitions'], 
+                                                    ExerciseConfigItem['Priority'], 
+                                                    ExerciseConfigItem['generateWarmup']))
+#import Day settings
+with open('Days.yml', 'r') as file:
+    ProgramConfig = safe_load(file)
+    DaySettingList=[]
+    for DayConfigItem in ProgramConfig['Weekdays']:
+        DaySettingList.append(DayClass.DayClass(DayConfigItem['Name'],
+                                                DayConfigItem['INOL_Priority']))
 
-ExerciseList:ExerciseClass.Exercise=[]
+####################################
 #API 
 app=FastAPI()
 
