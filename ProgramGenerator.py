@@ -10,7 +10,7 @@ from workoutroutinegenerator import WeekClass, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 
 ##function definitions:##
-def findExercise(searching:ExerciseClass.Exercise):
+def findExercise(searching:str):
     for Exercise in ExerciseList:
         if Exercise.Name==searching:
             return Exercise

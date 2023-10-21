@@ -6,7 +6,7 @@ from subprocess import *
 from yaml import *
 from workoutroutinegenerator import WeekClass, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 
 ##function definitions:##
@@ -29,7 +29,5 @@ def about():
     return {"Data": "This page shows general information about the webservice"}
 
 @app.get("/get_exercise/{exercise}")
-def get_exercise(requested_exercise:str):
-    for exercise in ExerciseList:
-        if exercise.Name==requested_exercise:
-            return f'{exercise.Name}' #not found, because the ExerciseList is not populated in the API
+def get_exercise(requested_exercise:str = Path(None, description="The name of the exercise you would like to see")):
+    return findExercise(requested_exercise) #not found, because the ExerciseList is not populated in the API
