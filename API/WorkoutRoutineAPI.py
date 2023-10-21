@@ -61,7 +61,7 @@ def add_exercise(name:str, minreps:int, maxreps:int, priority:float, warmup:bool
     ExerciseList.append(exercise_to_add)
     return exercise_to_add
 
-@app.post("/add-workout-week")
+@app.post("/add-workout-week") #TODO# test this with the workoutroutinegenerator rebaked
 def add_workout_week(VolumeSettingName:str, IntensitySettingName:str, INOLSettingName:str):
     VolumeSetting=ProgramSettingWeek.searchVolumeSetting(VolumeSettingName)
     IntensitySetting=ProgramSettingWeek.searchIntensitySetting(IntensitySettingName)
