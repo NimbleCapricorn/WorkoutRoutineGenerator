@@ -14,7 +14,7 @@ from typing import Optional
 def findExercise(searching:str):
     for Exercise in ExerciseList:
         if Exercise.Name==searching:
-            return Exercise.Name
+            return Exercise
     return "Exercise not found"
 ##########################
 ##Application data and config read##
@@ -49,4 +49,4 @@ def about():
 
 @app.get("/get-exercise")
 def get_exercise(requested_exercise: str):
-    return findExercise(requested_exercise) #not found, because the ExerciseList is not populated in the API
+    return findExercise(requested_exercise) 
