@@ -50,3 +50,9 @@ def about():
 @app.get("/get-exercise")
 def get_exercise(requested_exercise: str):
     return findExercise(requested_exercise) 
+
+@app.post("/add-exercise")
+def add_exercise(name:str, minreps:int, maxreps:int, priority:float, warmup:bool):
+    exercise_to_add=ExerciseClass.Exercise(name, minreps, maxreps, priority, warmup)
+    ExerciseList.append(exercise_to_add)
+    return exercise_to_add
