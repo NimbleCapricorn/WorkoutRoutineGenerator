@@ -7,13 +7,15 @@ from yaml import *
 from workoutroutinegenerator import WeekClass, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 from fastapi import FastAPI, Path
+from typing import Optional
 
 
 ##function definitions:##
 def findExercise(searching:str):
     for Exercise in ExerciseList:
         if Exercise.Name==searching:
-            return Exercise
+            return Exercise.Name
+    return "Exercise not found"
 ##########################
 
 ExerciseList:ExerciseClass.Exercise=[]
@@ -28,6 +30,6 @@ def home():
 def about():
     return {"Data": "This page shows general information about the webservice"}
 
-@app.get("/get_exercise/{exercise}")
-def get_exercise(requested_exercise:str = Path(None, description="The name of the exercise you would like to see")):
+@app.get("/get-exercise")
+def get_exercise(requested_exercise: str):
     return findExercise(requested_exercise) #not found, because the ExerciseList is not populated in the API
