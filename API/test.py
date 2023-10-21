@@ -4,7 +4,7 @@ from tablib import *
 from pandas import *
 from subprocess import *
 from yaml import *
-from workoutroutinegenerator import WeekClass, DayClass, Warmup
+from workoutroutinegenerator import ProgramSettingWeek, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 from fastapi import FastAPI, Path
 from typing import Optional
@@ -36,6 +36,10 @@ with open('Days.yml', 'r') as file:
                                                 DayConfigItem['INOL_Priority']))
 
 ####################################
+##Program Settings##
+Weeks:ProgramSettingWeek=[]
+Days:ExerciseClass.ProgramSettingDay=[]
+
 #API 
 app=FastAPI()
 
