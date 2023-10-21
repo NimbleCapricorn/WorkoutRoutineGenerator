@@ -10,7 +10,7 @@ from fastapi import FastAPI, Path
 
 
 ##function definitions:##
-def findExercise(searching:ExerciseClass.Exercise):
+def findExercise(searching:str):
     for Exercise in ExerciseList:
         if Exercise.Name==searching:
             return Exercise
