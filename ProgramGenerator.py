@@ -6,7 +6,7 @@ from tablib import *
 from pandas import *
 from subprocess import *
 from yaml import *
-from workoutroutinegenerator import ProgramSettingWeek, DayClass, Warmup
+from workoutroutinegenerator import ProgramSettingWeekClass as ProgramSettingWeek, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 
 ##function definitions:##
