@@ -9,7 +9,6 @@ from workoutroutinegenerator.exerciseclass import ExerciseClass
 from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
 from fastapi import FastAPI, Path
 from typing import Optional, List
-from typing import Optional, List
 
 
 ##function definitions:##
