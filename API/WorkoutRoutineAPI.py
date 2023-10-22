@@ -4,7 +4,7 @@ from tablib import *
 from pandas import *
 from subprocess import *
 from yaml import *
-from workoutroutinegenerator import DayClass, Warmup, ProgramSettingWeek
+from workoutroutinegenerator import DayClass, Warmup, ProgramSettingWeekClass as WeekClass
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 from fastapi import FastAPI, Path
 from typing import Optional
@@ -37,7 +37,7 @@ with open('Days.yml', 'r') as file:
 
 ####################################
 ##Program Settings##
-Weeks:ProgramSettingWeek.ProgramSettingWeek=[]
+Weeks:WeekClass.ProgramSettingWeek=[]
 Days:ExerciseClass.ProgramSettingDay=[]
 
 #API 
@@ -63,9 +63,9 @@ def add_exercise(name:str, minreps:int, maxreps:int, priority:float, warmup:bool
 
 @app.post("/add-workout-week") #TODO# test this with the workoutroutinegenerator rebaked
 def add_workout_week(VolumeSettingName:str, IntensitySettingName:str, INOLSettingName:str):
-    VolumeSetting=ProgramSettingWeek.searchVolumeSetting(VolumeSettingName)
-    IntensitySetting=ProgramSettingWeek.searchIntensitySetting(IntensitySettingName)
-    INOLSetting=ProgramSettingWeek.searchINOLSetting(INOLSettingName)
-    week_to_add = ProgramSettingWeek.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting)
+    VolumeSetting=WeekClass.searchVolumeSetting(VolumeSettingName)
+    IntensitySetting=WeekClass.searchIntensitySetting(IntensitySettingName)
+    INOLSetting=WeekClass.searchINOLSetting(INOLSettingName)
+    week_to_add = WeekClass.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting)
     Weeks.add(week_to_add)
     return week_to_add
