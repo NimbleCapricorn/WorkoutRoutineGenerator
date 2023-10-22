@@ -3,7 +3,7 @@ from .exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, In
 
 
 @dataclass       
-class WeekSetting:
+class ProgramSettingWeek:
     Volume:Volume
     Intensity:Intensity
     INOL_Target:INOL_Target

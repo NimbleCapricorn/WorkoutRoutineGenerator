@@ -6,7 +6,7 @@ from tablib import *
 from pandas import *
 from subprocess import *
 from yaml import *
-from workoutroutinegenerator import WeekClass, DayClass, Warmup
+from workoutroutinegenerator import ProgramSettingWeekClass as ProgramSettingWeek, DayClass, Warmup
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 
 ##function definitions:##
@@ -44,10 +44,10 @@ with open('ProgramConfig.yml', 'r') as file:
                                                                   DayConfigItem['ExerciseList']))
     Weeks=[]
     for WeekConfigItem in ProgramConfig['Weeks']:
-        VolumeSetting=WeekClass.searchVolumeSetting(WeekConfigItem['Volume'])
-        IntensitySetting=WeekClass.searchIntensitySetting(WeekConfigItem['Intensity'])
-        INOL_TargetSetting=WeekClass.searchINOLSetting(WeekConfigItem['INOL_Target'])
-        Weeks.append(WeekClass.WeekSetting(VolumeSetting, IntensitySetting, INOL_TargetSetting))
+        VolumeSetting=ProgramSettingWeek.searchVolumeSetting(WeekConfigItem['Volume'])
+        IntensitySetting=ProgramSettingWeek.searchIntensitySetting(WeekConfigItem['Intensity'])
+        INOL_TargetSetting=ProgramSettingWeek.searchINOLSetting(WeekConfigItem['INOL_Target'])
+        Weeks.append(ProgramSettingWeek.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOL_TargetSetting))
 ##################################################
 #Frontend development flags:
 generateWorkoutLog:bool=False

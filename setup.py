@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="WorkoutRoutineGenerator",
-    version="0.9.0",
+    version="0.9.3",
     author="Nimble Capricorn",
     author_email="nimble.capricorn@gmail.com",
     description="this package creates a workout routine",

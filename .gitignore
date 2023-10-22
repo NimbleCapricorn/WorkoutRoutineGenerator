@@ -6,6 +6,8 @@ __pycache__/
 # generated files
 *Output.*
 *readback_analysis.*
+# everything venv related
+*/myenv*
 
 # C extensions
 *.so
