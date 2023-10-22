@@ -63,7 +63,7 @@ def add_exercise(name:str, minreps:int, maxreps:int, priority:float, warmup:bool
     ExerciseList.append(exercise_to_add)
     return exercise_to_add
 
-@app.post("/add-workout-week")
+@app.post("/add-single-week-setting")
 def add_workout_week(VolumeSetting:Volume, IntensitySetting:Intensity, INOLSetting:INOL_Target):
     week_to_add = WeekClass.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting)
     Weeks.add(week_to_add)
@@ -75,7 +75,7 @@ def add_single_workout_day(Name:str, exercise_names:List[str]):
     WorkoutDays.append(day_to_add)
     return day_to_add
 
-@app.port("/define-a-workout-week")
+@app.port("/define-the-workout-week")
 def define_a_workout_week(WorkoutDayNames:List[str], DailyExerciseLists:List[str]):
     WorkoutWeek:ExerciseClass.ProgramSettingDay=[]
     for dayindex, WorkoutDayName in enumerate(WorkoutDayNames):
