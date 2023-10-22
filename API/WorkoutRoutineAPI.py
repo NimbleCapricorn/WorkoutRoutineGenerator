@@ -8,7 +8,7 @@ from workoutroutinegenerator import DayClass, Warmup, ProgramSettingWeekClass as
 from workoutroutinegenerator.exerciseclass import ExerciseClass
 from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
 from fastapi import FastAPI, Path
-from typing import Optional
+from typing import Optional, List
 
 
 ##function definitions:##
@@ -67,3 +67,9 @@ def add_workout_week(VolumeSetting:Volume, IntensitySetting:Intensity, INOLSetti
     week_to_add = WeekClass.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting)
     Weeks.add(week_to_add)
     return week_to_add
+
+@app.post("/add-workout-day")
+def add_workout_day(Name:str, exercise_names:List[str]):
+    day_to_add=ExerciseClass.ProgramSettingDay(Name, exercise_names)
+    Days.append(day_to_add)
+    return day_to_add
