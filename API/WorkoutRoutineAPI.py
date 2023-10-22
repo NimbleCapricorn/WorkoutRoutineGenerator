@@ -9,6 +9,7 @@ from workoutroutinegenerator.exerciseclass import ExerciseClass
 from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
 from fastapi import FastAPI, Path
 from typing import Optional, List
+from typing import Optional, List
 
 
 ##function definitions:##
@@ -38,8 +39,8 @@ with open('Days.yml', 'r') as file:
 
 ####################################
 ##Program Settings##
-Weeks:WeekClass.ProgramSettingWeek=[]
-Days:ExerciseClass.ProgramSettingDay=[]
+Weeks:WeekClass.ProgramSettingWeek=[]           #this list contains the week settings the program will incorporate
+WorkoutDays:ExerciseClass.ProgramSettingDay=[]  #this list contains all the days the person works out on, and the exercises they do
 
 #API 
 app=FastAPI()
@@ -68,8 +69,19 @@ def add_workout_week(VolumeSetting:Volume, IntensitySetting:Intensity, INOLSetti
     Weeks.add(week_to_add)
     return week_to_add
 
-@app.post("/add-workout-day")
-def add_workout_day(Name:str, exercise_names:List[str]):
+@app.post("/add-single-workout-day")
+def add_single_workout_day(Name:str, exercise_names:List[str]):
     day_to_add=ExerciseClass.ProgramSettingDay(Name, exercise_names)
-    Days.append(day_to_add)
+    WorkoutDays.append(day_to_add)
     return day_to_add
+
+@app.port("/define-a-workout-week")
+def define_a_workout_week(WorkoutDayNames:List[str], DailyExerciseLists:List[str]):
+    WorkoutWeek:ExerciseClass.ProgramSettingDay=[]
+    for dayindex, WorkoutDayName in enumerate(WorkoutDayNames):
+        day_to_add=ExerciseClass.ProgramSettingDay(WorkoutDayName, DailyExerciseLists[dayindex])
+        WorkoutWeek.append(day_to_add)
+    WorkoutDays.clear()
+    WorkoutDays.extend(WorkoutWeek)
+    return WorkoutWeek
+        
