@@ -6,6 +6,7 @@ from subprocess import *
 from yaml import *
 from workoutroutinegenerator import DayClass, Warmup, ProgramSettingWeekClass as WeekClass
 from workoutroutinegenerator.exerciseclass import ExerciseClass
+from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
 from fastapi import FastAPI, Path
 from typing import Optional
 
@@ -62,10 +63,7 @@ def add_exercise(name:str, minreps:int, maxreps:int, priority:float, warmup:bool
     return exercise_to_add
 
 @app.post("/add-workout-week") #TODO# test this with the workoutroutinegenerator rebaked
-def add_workout_week(VolumeSettingName:str, IntensitySettingName:str, INOLSettingName:str):
-    VolumeSetting=WeekClass.searchVolumeSetting(VolumeSettingName)
-    IntensitySetting=WeekClass.searchIntensitySetting(IntensitySettingName)
-    INOLSetting=WeekClass.searchINOLSetting(INOLSettingName)
+def add_workout_week(VolumeSetting:Volume, IntensitySetting:Intensity, INOLSetting:INOL_Target):
     week_to_add = WeekClass.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting)
     Weeks.add(week_to_add)
     return week_to_add
