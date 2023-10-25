@@ -63,7 +63,12 @@ for weekindex, week in enumerate(Weeks):
             for DayIterator in DaySettingList: 
                 if DayIterator.name == Day.Name: 
                     DayINOLSetting=DayIterator.DayINOLPriority
-            ListOfExercises.append(ExerciseClass.DailyExercise(weekindex, Day.Name, findExercise(exercise), week.Volume, week.Intensity, week.INOL_Target, DayINOLSetting))
+            ListOfExercises.append(ExerciseClass.DailyExercise( weekindex, Day.Name,
+                                                                findExercise(exercise), 
+                                                                week.Volume,
+                                                                week.Intensity,
+                                                                week.INOL_Target,
+                                                                DayINOLSetting))
             #warmup generation, depending on the setting
             if findExercise(exercise).generateWarmup:
                 ListOfExercises.extend(Warmup.GenerateWarmup(ListOfExercises[-1]))

@@ -40,6 +40,7 @@ with open('Days.yml', 'r') as file:
 ##Program Settings##
 Weeks:WeekClass.ProgramSettingWeek=[]           #this list contains the week settings the program will incorporate
 WorkoutDays:ExerciseClass.ProgramSettingDay=[]  #this list contains all the days the person works out on, and the exercises they do
+ProgramList:ExerciseClass.DailyExercise=[]
 
 #API 
 app=FastAPI()
@@ -83,4 +84,40 @@ def define_a_workout_week(WorkoutDayNames:List[str], DailyExerciseLists:List[str
     WorkoutDays.clear()
     WorkoutDays.extend(WorkoutWeek)
     return WorkoutWeek
-        
+
+@app.port("/generate-program")
+def generate_Program():
+    #Generating program Data
+    for weekindex, week in enumerate(Weeks):
+        for Day in WorkoutDays:
+            for exercise in Day.ExerciseList:
+                #generate the working sets:
+                for DayIterator in DaySettingList: 
+                    if DayIterator.name == Day.Name: 
+                        DayINOLSetting=DayIterator.DayINOLPriority
+                ProgramList.append(ExerciseClass.DailyExercise( weekindex, 
+                                                                Day.Name, 
+                                                                findExercise(exercise),
+                                                                week.Volume,
+                                                                week.Intensity, 
+                                                                week.INOL_Target,
+                                                                DayINOLSetting))
+                #warmup generation, depending on the setting
+                if findExercise(exercise).generateWarmup:
+                    ProgramList.extend(Warmup.GenerateWarmup(ProgramList[-1]))
+
+    #DataFrame implementation        
+    Program=DataFrame(data={"Week":[], "Day":[], "Exercise":[], "Sets":[], "Reps":[], "PercentageOfOneRepMax":[], "INOL":[]})
+    for index, exercise in enumerate(ProgramList):
+        Program=concat([Program, 
+                        DataFrame([[exercise.WeekIndex,
+                                    exercise.Day,
+                                    exercise.Name,
+                                    exercise.NumberOfSets, 
+                                    exercise.NumberOfReps,
+                                    exercise.Intensity,
+                                    exercise.INOL ]],
+                                columns=Program.columns)],
+                        ignore_index=True)
+    ####################################################
+    return Program
