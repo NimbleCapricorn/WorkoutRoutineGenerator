@@ -28,4 +28,4 @@ class INOL_Taget:
     name:str
     value:float
 
-INOL_Targets=[INOL_Taget("Deload", 0, 0.4), INOL_Taget("DailyRecoverable", 1, 1.0), INOL_Taget("LoadAccumulating", 2 , 2.0)]
+INOL_Targets=[INOL_Taget("Deload", 0.4), INOL_Taget("DailyRecoverable", 1.0), INOL_Taget("LoadAccumulating", 2.0)]
