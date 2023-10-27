@@ -1,7 +1,7 @@
 from dataclasses import *
 from yaml import *
 from .difficulty import Difficulty
-from .difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL_Target
+from .difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL, INOL_Targets
 
 @dataclass
 class Exercise:
@@ -22,7 +22,7 @@ class DailyExercise:
     NumberOfSets:int
     NumberOfReps:int
     Intensity:float
-    INOL:float
+    INOLValue:float
 
     def calculateINOL(self, setcount, temporaryReps, Intensity):
         return (setcount*temporaryReps)/(100-Intensity)
@@ -52,7 +52,7 @@ class DailyExercise:
             FurtherChangesPossible=False
         return FurtherChangesPossible
 
-    def __init__(self, weeknumber, day, CallingExercise, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL_Target, DayINOLSetting:float):
+    def __init__(self, weeknumber, day, CallingExercise, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL, DayINOLSetting:float):
         #temporary values to make calcuations easier
         self.WeekIndex=weeknumber
         self.Day=day
@@ -79,66 +79,66 @@ class DailyExercise:
                 IntermittentIntensity=IntensityIterator
         self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
 
-        self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
+        self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
 
         #Depending on the INOL target setting, to achieve a good stimulus, numbers may need to be bumped up or down as well   
         #Very big error: correct set count
         for iterator in range(1,2,1):
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.4/iterator)):
+            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (-0.4/iterator)):
                 self.NumberOfSets+=1
-                self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.4/iterator)): 
+                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
+            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) > (0.4/iterator)): 
                 self.NumberOfSets-=1 
                 if self.NumberOfSets == 0:
                     self.NumberOfSets = 1
                     break
-                self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
+                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
                 
 
             #semi-big error: change rep number
             FurtherChangesPossible:bool=True
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.14/iterator) ):
-                if (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (-0.24/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (-0.14/iterator) ):
+                if (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (-0.24/iterator) ):
                     FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+2)
                 else:
                     FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+1)
                 self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                 if not FurtherChangesPossible:
                     break
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.2/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) > (0.2/iterator) ):
                 FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps-1)
                 self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                 if not FurtherChangesPossible:
                     break
-            self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
+            self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
 
             #small error:change intensity
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) < (- 0.1/iterator) ):
+            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (- 0.1/iterator) ):
                 self.Intensity+=0.3
-                self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOL, INOL_TargetWithPriority) > (0.1/iterator) ):
+                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
+            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) > (0.1/iterator) ):
                 self.Intensity-=0.3
-                self.INOL=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
+                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
         
         self.Intensity=round(self.Intensity,1)
-        self.INOL=round(self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity),1)
+        self.INOLValue=round(self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity),1)
         
         self.Name=CallingExercise.Name
 
     @classmethod
-    def from_args(cls, weekindex:int, day:str, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOL:float): 
-        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOL_Target.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+    def from_args(cls, weekindex:int, day:str, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOLTarget:float): 
+        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOL.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
         instance.WeekIndex=weekindex
         instance.Day=day
         instance.Name=name
         instance.NumberOfSets=NumberOfSets
         instance.NumberOfReps=NumberOfReps
         instance.Intensity=intensity
-        instance.INOL=INOL
+        instance.INOLValue=INOLTarget
         return instance
 
     def __str__(self):
-        return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOL}"
+        return f"Exercise named:{self.Name}, number of sets:{self.NumberOfSets}, number of reps:{self.NumberOfReps} @intensity:{self.Intensity}, which means an INOL of:{self.INOLValue}"
     
 @dataclass
 class ProgramSettingDay:

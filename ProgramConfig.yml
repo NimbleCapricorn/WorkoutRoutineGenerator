@@ -36,16 +36,16 @@ Weeks:
   - Week1:
     Volume: LOW
     Intensity: MOD
-    INOL_Target: DailyRecoverable
+    INOL: DailyRecoverable
   - Week2:
     Volume: MED
     Intensity: MOD
-    INOL_Target: DailyRecoverable
+    INOL: DailyRecoverable
   - Week3:
     Volume: MED
     Intensity: MODP
-    INOL_Target: Deload
+    INOL: Deload
   - Week4:
     Volume: MED
     Intensity: HEAVY
-    INOL_Target: LoadAccumulating
+    INOL: LoadAccumulating

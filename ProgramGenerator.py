@@ -46,8 +46,8 @@ with open('ProgramConfig.yml', 'r') as file:
     for WeekConfigItem in ProgramConfig['Weeks']:
         VolumeSetting=ProgramSettingWeek.searchVolumeSetting(WeekConfigItem['Volume'])
         IntensitySetting=ProgramSettingWeek.searchIntensitySetting(WeekConfigItem['Intensity'])
-        INOL_TargetSetting=ProgramSettingWeek.searchINOLSetting(WeekConfigItem['INOL_Target'])
-        Weeks.append(ProgramSettingWeek.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOL_TargetSetting))
+        INOLSetting=ProgramSettingWeek.searchINOLSetting(WeekConfigItem['INOL'])
+        Weeks.append(ProgramSettingWeek.ProgramSettingWeek(VolumeSetting, IntensitySetting, INOLSetting))
 ##################################################
 #Frontend development flags:
 generateWorkoutLog:bool=False
@@ -84,7 +84,7 @@ for index, exercise in enumerate(ListOfExercises):
                                 exercise.NumberOfSets, 
                                 exercise.NumberOfReps,
                                 exercise.Intensity,
-                                exercise.INOL ]],
+                                exercise.INOLValue ]],
                             columns=Program.columns)],
                     ignore_index=True)
 ####################################################
