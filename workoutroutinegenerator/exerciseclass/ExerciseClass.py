@@ -1,7 +1,7 @@
 from dataclasses import *
 from yaml import *
-from .difficulty import Difficulty
-from .difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL, INOL_Targets
+from workoutroutinegenerator.exerciseclass.difficulty import Difficulty
+from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL, INOLTarget, INOL_Targets
 
 @dataclass
 class Exercise:
@@ -24,20 +24,23 @@ class DailyExercise:
     Intensity:float
     INOLValue:float
 
+    def getINOLBorders(self, INOLTargetWithPriority):
+                    if INOLTargetWithPriority.value <= INOL_Targets[0].value:
+                        return [0.0, 0.4]
+                    if  INOLTargetWithPriority.value >=INOL_Targets[0].value and  INOLTargetWithPriority.value <= INOL_Targets[1].value:
+                        return [0.4, 1.0]
+                    else:
+                        return [1.0, 2.0]
+                    
+                    
+    def checkINOLisInRange(self, number, lower_bound, upper_bound):
+        return lower_bound <= number <= upper_bound
+
     def calculateINOL(self, setcount, temporaryReps, Intensity):
         return (setcount*temporaryReps)/(100-Intensity)
     
-    def calculateErrorFromINOL(self, INOL, INOL_target):
-        return ((INOL-INOL_target)/INOL_target)
-    
-    def SetNumberOfSets(self, VolumeSetting, LOWVolume:int, MEDVolume:int, HIGHVolume:int):
-        match VolumeSetting.name:
-            case Volume.LOW.name:
-                self.NumberOfSets=LOWVolume
-            case Volume.MED.name:
-                self.NumberOfSets=MEDVolume
-            case Volume.HIGH.name:
-                self.NumberOfSets=HIGHVolume
+    def calculateErrorFromINOL(self, INOL, INOL_Target):
+        return ((INOL-INOL_Target.value)/INOL_Target.value)
 
     def SetNumberOfReps(self, Exercise:Exercise, NumberOfReps:int):
         FurtherChangesPossible:bool=False
@@ -60,7 +63,9 @@ class DailyExercise:
         self.NumberOfSets=VolumeSetting.value
 
 
-        INOL_TargetWithPriority=INOL_Target.value/(CallingExercise.Priority*DayINOLSetting)
+        INOLTargetWithPriority=INOLTarget(INOL_Target.name, INOL_Target.value/(CallingExercise.Priority*DayINOLSetting))
+
+        INOLBorders=self.getINOLBorders(INOLTargetWithPriority)
 
         #determine best rep number for the volume setting
         match VolumeSetting.name: 
@@ -87,12 +92,29 @@ class DailyExercise:
 
         self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
 
-        #calculate whether you are in the INOL target range #TODO#
-        for index, INOL_Iterator in enumerate(INOL_Targets):
-            if INOL_Target.name==INOL_Iterator.name:
-                if index == 0:
-                    if INOL_TargetWithPriority <= INOL_Targets[0].value:
+        #calculate whether you are in the INOL target range 
+        while not self.checkINOLisInRange(self.INOLValue, *INOLBorders):
+            if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority) < 0:
+                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)<-0.4:
+                    self.NumberOfSets+=1
+                elif self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)<-0.2:
+                    FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+1)
+                    if not FurtherChangesPossible:
                         break
+                else:
+                    self.Intensity+=0.3
+            else:
+                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.4:
+                    self.NumberOfSets-=1
+                elif self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.2:
+                    FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps-1)
+                    if not FurtherChangesPossible:
+                        break
+                else:
+                    self.Intensity+=0.3
+            self.INOLValue=self.calculateINOL(self.NumberOfSets,self.NumberOfReps,self.Intensity)
+
+        
                     
         
         self.Intensity=round(self.Intensity,1)

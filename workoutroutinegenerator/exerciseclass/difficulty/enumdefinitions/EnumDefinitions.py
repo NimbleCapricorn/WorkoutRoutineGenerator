@@ -24,8 +24,8 @@ class INOL(Enum):
                             #above 2.0 lies madness
 
 @dataclass
-class INOL_Taget:
+class INOLTarget:
     name:str
     value:float
 
-INOL_Targets=[INOL_Taget("Deload", 0.4), INOL_Taget("DailyRecoverable", 1.0), INOL_Taget("LoadAccumulating", 2.0)]
+INOL_Targets=[INOLTarget("Deload", 0.4), INOLTarget("DailyRecoverable", 1.0), INOLTarget("LoadAccumulating", 2.0)]
