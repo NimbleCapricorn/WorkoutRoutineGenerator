@@ -64,12 +64,18 @@ class DailyExercise:
 
         #determine best rep number for the volume setting
         match VolumeSetting.name: 
+            case Volume.VLOW.name:
+                self.NumberOfReps=CallingExercise.minRepetitions
             case Volume.LOW.name:
-                self.NumberOfReps=CallingExercise.maxRepetitions
+                self.NumberOfReps=round(CallingExercise.minRepetitions*1.3)
             case Volume.MED.name:
                 self.NumberOfReps=round((CallingExercise.maxRepetitions+CallingExercise.minRepetitions)/2)
+            case Volume.MEDP.name:
+                self.NumberOfReps=round(CallingExercise.minRepetitions*1.3)
             case Volume.HIGH.name:
-                self.NumberOfReps=CallingExercise.minRepetitions
+                self.NumberOfReps=round(CallingExercise.maxRepetitions/1.3)
+            case Volume.VHIGH.name:
+                self.NumberOfReps=CallingExercise.maxRepetitions
 
 
 
@@ -81,44 +87,13 @@ class DailyExercise:
 
         self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity) #Intensity Plus Number Of Lifts is a common number to self-check a program.
 
-        #Depending on the INOL target setting, to achieve a good stimulus, numbers may need to be bumped up or down as well   
-        #Very big error: correct set count
-        for iterator in range(1,2,1):
-            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (-0.4/iterator)):
-                self.NumberOfSets+=1
-                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) > (0.4/iterator)): 
-                self.NumberOfSets-=1 
-                if self.NumberOfSets == 0:
-                    self.NumberOfSets = 1
-                    break
-                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-                
-
-            #semi-big error: change rep number
-            FurtherChangesPossible:bool=True
-            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (-0.14/iterator) ):
-                if (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (-0.24/iterator) ):
-                    FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+2)
-                else:
-                    FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+1)
-                self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
-                if not FurtherChangesPossible:
-                    break
-            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) > (0.2/iterator) ):
-                FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps-1)
-                self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
-                if not FurtherChangesPossible:
-                    break
-            self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-
-            #small error:change intensity
-            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) < (- 0.1/iterator) ):
-                self.Intensity+=0.3
-                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
-            while (self.calculateErrorFromINOL(self.INOLValue, INOL_TargetWithPriority) > (0.1/iterator) ):
-                self.Intensity-=0.3
-                self.INOLValue=self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity)
+        #calculate whether you are in the INOL target range #TODO#
+        for index, INOL_Iterator in enumerate(INOL_Targets):
+            if INOL_Target.name==INOL_Iterator.name:
+                if index == 0:
+                    if INOL_TargetWithPriority <= INOL_Targets[0].value:
+                        break
+                    
         
         self.Intensity=round(self.Intensity,1)
         self.INOLValue=round(self.calculateINOL(self.NumberOfSets, self.NumberOfReps, self.Intensity),1)

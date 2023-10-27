@@ -3,42 +3,42 @@ Exercises:
     minRepetitions: 1 #minimum number or repetitions that can be prescribed in a set
     maxRepetitions: 4 #maximum number or repetitions that can be prescribed in a set
     Priority: 0.95 # float between 0.5 and 1 where 0.5 is the highest and 1 is the lowest. (0.5 means a 2x increase in INOL, so use sparingly)
-    generateWarmup: True
+    generateWarmup: False
   - Name: clean and jerk
     minRepetitions: 1 
     maxRepetitions: 4 
     Priority: 0.95 
-    generateWarmup: True
+    generateWarmup: False
   - Name: clean
     minRepetitions: 2 
     maxRepetitions: 4 
     Priority: 1.0 
-    generateWarmup: True
+    generateWarmup: False
   - Name: jerk
     minRepetitions: 2 
     maxRepetitions: 4 
     Priority: 1.0 
-    generateWarmup: True
+    generateWarmup: False
   - Name: push press
     minRepetitions: 3 
     maxRepetitions: 5 
     Priority: 1.0 
-    generateWarmup: True
+    generateWarmup: False
   - Name: front squat
     minRepetitions: 3 
     maxRepetitions: 8 
     Priority: 1.0 
-    generateWarmup: True
+    generateWarmup: False
   - Name: back squat
     minRepetitions: 3 
     maxRepetitions: 8 
     Priority: 1.0 
-    generateWarmup: True
+    generateWarmup: False
   - Name: squat
     minRepetitions: 3 
     maxRepetitions: 8 
     Priority: 1.0 
-    generateWarmup: True
+    generateWarmup: False
   - Name: clean pull
     minRepetitions: 2 
     maxRepetitions: 5 
