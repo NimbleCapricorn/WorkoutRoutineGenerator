@@ -28,4 +28,4 @@ class INOLTarget:
     name:str
     value:float
 
-INOL_Targets=[INOLTarget("Deload", 0.4), INOLTarget("DailyRecoverable", 1.0), INOLTarget("LoadAccumulating", 2.0)]
+INOL_Targets=[INOLTarget("Deload", 0.40), INOLTarget("DailyRecoverable", 1.0), INOLTarget("LoadAccumulating", 2.0)]
