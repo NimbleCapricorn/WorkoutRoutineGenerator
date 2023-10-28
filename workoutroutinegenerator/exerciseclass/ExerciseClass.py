@@ -56,7 +56,6 @@ class DailyExercise:
         return FurtherChangesPossible
 
     def __init__(self, weeknumber, day, CallingExercise, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOLTarget, DayINOLSetting:float):
-        #temporary values to make calcuations easier
         self.WeekIndex=weeknumber
         self.Day=day
         IntermittentIntensity:Difficulty.IntensityFunction
