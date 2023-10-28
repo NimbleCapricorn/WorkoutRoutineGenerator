@@ -1,11 +1,11 @@
 Exercises:
   - Name: snatch
-    minRepetitions: 1 #minimum number or repetitions that can be prescribed in a set
+    minRepetitions: 2 #minimum number or repetitions that can be prescribed in a set
     maxRepetitions: 4 #maximum number or repetitions that can be prescribed in a set
     Priority: 0.95 # float between 0.5 and 1 where 0.5 is the highest and 1 is the lowest. (0.5 means a 2x increase in INOL, so use sparingly)
     generateWarmup: False
   - Name: clean and jerk
-    minRepetitions: 1 
+    minRepetitions: 2 
     maxRepetitions: 4 
     Priority: 0.95 
     generateWarmup: False

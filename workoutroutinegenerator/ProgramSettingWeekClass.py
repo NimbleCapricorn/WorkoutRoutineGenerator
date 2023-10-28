@@ -1,21 +1,27 @@
 from dataclasses import dataclass
-from .exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL, INOL_Targets
+from .exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOLTarget, INOLBorders
 
 
 @dataclass       
 class ProgramSettingWeek:
     Volume:Volume
     Intensity:Intensity
-    INOL_Target:INOL
+    INOL_Target:INOLTarget
 
 def searchVolumeSetting(setting:str):
     match setting:
+        case Volume.VLOW.name:
+            return Volume.VLOW
         case Volume.LOW.name:
             return Volume.LOW
         case Volume.MED.name:
             return Volume.MED
+        case Volume.MEDP.name:
+            return Volume.MEDP
         case Volume.HIGH.name:
             return Volume.HIGH
+        case Volume.VHIGH.name:
+            return Volume.VHIGH
     return "volume setting set in the config file not found"
 
 def searchIntensitySetting(setting:str):
@@ -38,10 +44,10 @@ def searchIntensitySetting(setting:str):
 
 def searchINOLSetting(setting:str):
     match setting:
-        case INOL.Deload.name:
-            return INOL.Deload
-        case INOL.DailyRecoverable.name:
-            return INOL.DailyRecoverable
-        case INOL.LoadAccumulating.name:
-            return INOL.DailyRecoverable
-    return "INOL_Target setting set in the config file not found"
+        case INOLTarget.Deload.name:
+            return INOLTarget.Deload
+        case INOLTarget.DailyRecoverable.name:
+            return INOLTarget.DailyRecoverable
+        case INOLTarget.LoadAccumulating.name:
+            return INOLTarget.DailyRecoverable
+    return "INOLTarget setting set in the config file not found"

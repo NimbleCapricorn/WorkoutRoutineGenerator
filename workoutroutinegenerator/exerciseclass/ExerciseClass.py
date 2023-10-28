@@ -1,7 +1,7 @@
 from dataclasses import *
 from yaml import *
 from workoutroutinegenerator.exerciseclass.difficulty import Difficulty
-from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOL, INOLTarget, INOL_Targets
+from workoutroutinegenerator.exerciseclass.difficulty.enumdefinitions.EnumDefinitions import Volume, Intensity, INOLTarget, INOLBorder, INOLBorders
 
 @dataclass
 class Exercise:
@@ -25,9 +25,9 @@ class DailyExercise:
     INOLValue:float
 
     def getINOLBorders(self, INOLTargetWithPriority):
-                    if INOLTargetWithPriority.value <= INOL_Targets[0].value:
+                    if INOLTargetWithPriority.value <= INOLBorders[0].value:
                         return [0.0, 0.4]
-                    if  INOLTargetWithPriority.value >=INOL_Targets[0].value and  INOLTargetWithPriority.value <= INOL_Targets[1].value:
+                    if  INOLTargetWithPriority.value >=INOLBorders[0].value and  INOLTargetWithPriority.value <= INOLBorders[1].value:
                         return [0.4, 1.0]
                     else:
                         return [1.0, 2.0]
@@ -55,7 +55,7 @@ class DailyExercise:
             FurtherChangesPossible=False
         return FurtherChangesPossible
 
-    def __init__(self, weeknumber, day, CallingExercise, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOL, DayINOLSetting:float):
+    def __init__(self, weeknumber, day, CallingExercise, VolumeSetting:Volume, IntensitySetting:Intensity, INOL_Target:INOLTarget, DayINOLSetting:float):
         #temporary values to make calcuations easier
         self.WeekIndex=weeknumber
         self.Day=day
@@ -63,7 +63,7 @@ class DailyExercise:
         self.NumberOfSets=VolumeSetting.value
 
 
-        INOLTargetWithPriority=INOLTarget(INOL_Target.name, INOL_Target.value/(CallingExercise.Priority*DayINOLSetting))
+        INOLTargetWithPriority=INOLBorder(INOL_Target.name, INOL_Target.value/(CallingExercise.Priority*DayINOLSetting)) #this is why the INOLBorder class is a stupid name
 
         INOLBorders=self.getINOLBorders(INOLTargetWithPriority)
 
@@ -95,19 +95,21 @@ class DailyExercise:
         #calculate whether you are in the INOL target range 
         while not self.checkINOLisInRange(self.INOLValue, *INOLBorders):
             if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority) < 0:
-                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)<-0.4:
+                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)<-0.5:
                     self.NumberOfSets+=1
-                elif self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)<-0.2:
+                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)<-0.2:
                     FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps+1)
+                    self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                     if not FurtherChangesPossible:
                         break
                 else:
                     self.Intensity+=0.3
             else:
-                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.4:
+                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.5:
                     self.NumberOfSets-=1
                 elif self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.2:
                     FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps-1)
+                    self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                     if not FurtherChangesPossible:
                         break
                 else:
@@ -124,7 +126,7 @@ class DailyExercise:
 
     @classmethod
     def from_args(cls, weekindex:int, day:str, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOLTarget:float): 
-        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOL.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOLTarget.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
         instance.WeekIndex=weekindex
         instance.Day=day
         instance.Name=name

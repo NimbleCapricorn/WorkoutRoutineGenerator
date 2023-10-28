@@ -17,15 +17,15 @@ class Intensity(Enum):
     HEAVYP=5
     MAX=6
 
-class INOL(Enum): 
+class INOLTarget(Enum): 
     Deload=0.4             #under 0.4 is too little for stimulating growth, but is perfect for deloading while still practicing skills
-    DailyRecoverable=1.0    #between 0.4 and 1.0 is recoverable stimulus (next day you can repeat the same workout basically)
-    LoadAccumulating=2.0    #1.0 to 2.0 is accumulating fatigue, with bigger strength gains (only once you fully recover, though)
+    DailyRecoverable=0.7    #between 0.4 and 1.0 is recoverable stimulus (next day you can repeat the same workout basically)
+    LoadAccumulating=1.5    #1.0 to 2.0 is accumulating fatigue, with bigger strength gains (only once you fully recover, though)
                             #above 2.0 lies madness
 
 @dataclass
-class INOLTarget:
+class INOLBorder:
     name:str
     value:float
 
-INOL_Targets=[INOLTarget("Deload", 0.40), INOLTarget("DailyRecoverable", 1.0), INOLTarget("LoadAccumulating", 2.0)]
+INOLBorders=[INOLBorder("Deload", 0.40), INOLBorder("DailyRecoverable", 1.0), INOLBorder("LoadAccumulating", 2.0)]
