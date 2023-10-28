@@ -106,7 +106,7 @@ class DailyExercise:
             else:
                 if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.5:
                     self.NumberOfSets-=1
-                elif self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.2:
+                if self.calculateErrorFromINOL(self.INOLValue, INOLTargetWithPriority)>0.2:
                     FurtherChangesPossible=self.SetNumberOfReps(CallingExercise, self.NumberOfReps-1)
                     self.Intensity=round(IntermittentIntensity.IntensityFunction(self.NumberOfReps),1)
                     if not FurtherChangesPossible:
