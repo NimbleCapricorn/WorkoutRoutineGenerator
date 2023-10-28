@@ -125,7 +125,8 @@ class DailyExercise:
 
     @classmethod
     def from_args(cls, weekindex:int, day:str, name:str, NumberOfSets:int, NumberOfReps:int, intensity:float, INOLTarget:float): 
-        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOLTarget.DailyRecoverable, 1.0) #these parameters are gonna be overwritten, but can't create new instance  without some data
+        #these parameters are gonna be overwritten, but can't create new instance  without some data
+        instance=cls(0, "Monday", Exercise("snatch", 1, 4, 1.0, False), Volume.LOW, Intensity.MOD, INOLTarget.DailyRecoverable, 1.0) 
         instance.WeekIndex=weekindex
         instance.Day=day
         instance.Name=name
