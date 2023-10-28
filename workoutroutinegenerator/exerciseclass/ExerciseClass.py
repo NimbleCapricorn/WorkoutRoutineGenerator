@@ -62,7 +62,7 @@ class DailyExercise:
         self.NumberOfSets=VolumeSetting.value
 
 
-        INOLTargetWithPriority=INOLBorder(INOL_Target.name, INOL_Target.value/(CallingExercise.Priority*DayINOLSetting)) #this is why the INOLBorder class is a stupid name
+        INOLTargetWithPriority=INOLBorder(INOL_Target.name, INOL_Target.value/(CallingExercise.Priority*DayINOLSetting)) #TODO#this is why the INOLBorder class is a stupid name
 
         INOLBorders=self.getINOLBorders(INOLTargetWithPriority)
 
