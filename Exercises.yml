@@ -88,4 +88,17 @@ Exercises:
     minRepetitions: 2 
     maxRepetitions: 4 
     Priority: 1.0 
-    generateWarmup: False    
+    generateWarmup: False
+  - Name: high snatch
+    minRepetitions: 2 
+    maxRepetitions: 5 
+    Priority: 1.0 
+    generateWarmup: False
+  - Name: block snatch
+    minRepetitions: 2 
+    maxRepetitions: 4 
+    Priority: 1.0
+  - Name: hang snatch
+    minRepetitions: 2 
+    maxRepetitions: 4 
+    Priority: 1.0   
