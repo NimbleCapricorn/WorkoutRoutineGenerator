@@ -21,16 +21,16 @@
 Workoutdays: 
   - Day1:
     Name: Monday
-    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+    ExerciseList: ['hang snatch', 'high snatch', 'clean pull']
   - Day2:
     Name: Tuesday
-    ExerciseList: ['clean', 'clean pull', 'front squat']
+    ExerciseList: ['clean', 'jerk', 'front squat']
   - Day3:
     Name: Thursday
-    ExerciseList: ['snatch', 'snatch pull', 'snatch balance']
+    ExerciseList: ['block snatch', 'snatch pull', 'snatch balance']
   - Day4: 
     Name: Friday
-    ExerciseList: ['jerk', 'push press', 'squat']
+    ExerciseList: ['clean', 'push press', 'squat']
 
 Weeks:
   - Week1:
@@ -47,5 +47,5 @@ Weeks:
     INOL: DailyRecoverable
   - Week4:
     Volume: MEDP
-    Intensity: MOD
+    Intensity: HEAVY
     INOL: LoadAccumulating
