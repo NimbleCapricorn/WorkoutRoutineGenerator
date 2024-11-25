@@ -10,14 +10,14 @@ This documents aim is to show people how to use the Program generator
 ## Configuring the Program Generator
 When trying to create a new program block, first you need to configure which days of the week you would like to train on, and what exercises you would like to practice 
 ### Selecting workout days
-To select workout days, open the Days.csv document. You will see days and floating point numbers as pictured below
+To select workout days, open the Days.yml document. You will see days and floating point numbers as pictured below
 
 
-![Dayscsv](./UserManualReferences/dayscsv.png)
+![Daysettings](./UserManualReferences/Day.png)
 
 The floating point numbers are the volume multipliers of the days. That means, if you set the floating point number to 1, the volume setting for that days will not be modified. If you 
 set the float to 0.5, the volume will be doubled (to be exact, the INOL will be doubled, but more on that later), if set to 2.0, the INOL target will be halved. 
-I strongly recommend you to leave the priority settings on 1.0 for the first few blocks, and feel it out for yourself whether you need more volume and intensity or not. 
+I strongly recommend you to leave the priority settings on 1.0 for the first few blocks, and feel it out for yourself whether you need more volume and intensity or not. (and even then, its wiser to set higher volume or intensity days, and fiddle with INOL settings in general once you can handle more in general, not just intermittently)
 
 After setting up the day priorities, copy the days you would like to work out on into the ProgramConfig.yml file as shown in the picture below. 
 
