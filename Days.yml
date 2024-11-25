@@ -4,16 +4,16 @@ Weekdays:
     INOL_Priority: 1.0
   - Day2:
     Name: Tuesday
-    INOL_Priority: 1.0
+    INOL_Priority: 0.8
   - Day3:
     Name: Wednesday
-    INOL_Priority: 1.1
+    INOL_Priority: 1.0
   - Day4:
     Name: Thursday
-    INOL_Priority: 1.2
+    INOL_Priority: 1.0
   - Day5:
     Name: Friday
-    INOL_Priority: 0.8
+    INOL_Priority: 0.5
   - Day6:
     Name: Saturday
     INOL_Priority: 1.0

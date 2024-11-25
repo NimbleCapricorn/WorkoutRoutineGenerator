@@ -98,7 +98,9 @@ Exercises:
     minRepetitions: 2 
     maxRepetitions: 4 
     Priority: 1.0
+    generateWarmup: False
   - Name: hang snatch
     minRepetitions: 2 
     maxRepetitions: 4 
-    Priority: 1.0   
+    Priority: 1.0
+    generateWarmup: False

@@ -47,5 +47,5 @@ Weeks:
     INOL: DailyRecoverable
   - Week4:
     Volume: MEDP
-    Intensity: MOD
+    Intensity: HEAVY
     INOL: LoadAccumulating
