@@ -3,9 +3,12 @@
 This documents aim is to show people how to use the Program generator
 
 ## Compiling and installing the workoutroutinegenerator module
+### Method 1: compiling from source
 1. open a terminal, and run the setup.py script with python3.10+ as follows: `python3.x setup.py sdist` (where x is your python 3 version number).
 2. go to the \WorkoutRoutineGenerator\dist directory in a terminal
 3.  run `python3.x -m pip install release` (substituting x with your python number and *release* with the release number you just compiled
+### Method 2: installing from release 
+1. open a terminal, run the command `pip install -i https://test.pypi.org/simple/ WorkoutRoutineGenerator`
 
 ## Configuring the Program Generator
 When trying to create a new program block, first you need to configure which days of the week you would like to train on, and what exercises you would like to practice 
